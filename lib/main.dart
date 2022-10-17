@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:otp/otp.dart';
 import 'package:english_words/english_words.dart';
+import 'dart:async';
 
 void main() {
   runApp(const AuthApp());
@@ -82,27 +83,44 @@ class _AuthItemState extends State<AuthItem> {
               _suggestions.addAll(generateWordPairs().take(10));
             }
             final alreadySaved = _saved.contains(_suggestions[index]);
-            return ListTile(
-                title: Text(
-                    OTP.generateTOTPCodeString(_suggestions[index].asUpperCase,
-                        DateTime.now().millisecondsSinceEpoch),
-                    style: _biggerFont),
-                subtitle: Text(OTP.remainingSeconds().toString()),
-                trailing: Icon(
-                  alreadySaved ? Icons.favorite : Icons.favorite_border,
-                  color: alreadySaved ? Colors.red : null,
-                  semanticLabel: alreadySaved ? 'Remove from saved' : 'Save',
-                ),
-                onTap: () {
-                  setState(() {
-                    if (alreadySaved) {
-                      _saved.remove(_suggestions[index]);
-                    } else {
-                      _saved.add(_suggestions[index]);
-                    }
-                  });
-                });
+            return AuthItemTile(
+              secret: _suggestions[index].asUpperCase,
+            );
           }),
+    );
+  }
+}
+
+class AuthItemTile extends StatefulWidget {
+  final String secret;
+
+  const AuthItemTile({Key? key, required this.secret}) : super(key: key);
+
+  @override
+  State<AuthItemTile> createState() => _AuthItemTileState();
+}
+
+class _AuthItemTileState extends State<AuthItemTile> {
+  int _time = DateTime.now().millisecondsSinceEpoch;
+
+  late Timer _everySecond;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _everySecond = Timer.periodic(Duration(milliseconds: 100), (Timer t) {
+      setState(() {
+        _time = DateTime.now().millisecondsSinceEpoch;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(OTP.generateTOTPCodeString(widget.secret, _time)),
+      subtitle: Text(OTP.remainingSeconds().toString()),
     );
   }
 }
