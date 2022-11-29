@@ -1,9 +1,6 @@
 import 'package:auth/accounts/view/account_view.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:otp/otp.dart';
-import 'package:english_words/english_words.dart';
-import 'dart:async';
 
 void main() {
   Bloc.observer = SimpleBlocObserver();

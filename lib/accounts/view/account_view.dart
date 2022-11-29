@@ -1,7 +1,6 @@
 import 'package:auth/accounts/bloc/account_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:auth/accounts/accounts.dart';
 import 'package:auth/accounts/widgets/account_list_item.dart';
 
 class AccountsPage extends StatelessWidget {
@@ -30,6 +29,8 @@ class _AccountsListState extends State<AccountsList> {
   Widget build(BuildContext context) {
     return BlocBuilder<AccountBloc, AccountState>(builder: (context, state) {
       switch (state.status) {
+        case AccountStatus.initial:
+          return const Center(child: Text('initial state'));
         case AccountStatus.failure:
           return const Center(child: Text('failed to fetch accounts'));
         case AccountStatus.success:

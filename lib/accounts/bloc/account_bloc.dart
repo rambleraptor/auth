@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:auth/accounts/accounts.dart';
 import 'package:equatable/equatable.dart';
 import 'package:english_words/english_words.dart';
@@ -17,11 +16,17 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       AccountFetched event, Emitter<AccountState> emit) async {
     if (state.status == AccountStatus.initial) {
       final accounts = _fetchDevAccounts(10);
-      return emit(state.copyWith(status: AccountStatus.success, accounts: accounts, hasReachedMax: false))
+      return emit(state.copyWith(
+          status: AccountStatus.success,
+          accounts: accounts,
+          hasReachedMax: false));
     }
 
     final accounts = _fetchDevAccounts(10);
-    return emit(state.copyWith(accounts: List.of(state.accounts)..addAll(accounts), status: AccountStatus.success, hasReachedMax: false))
+    return emit(state.copyWith(
+        accounts: List.of(state.accounts)..addAll(accounts),
+        status: AccountStatus.success,
+        hasReachedMax: false));
   }
 
   List<Account> _fetchDevAccounts(int num) {
