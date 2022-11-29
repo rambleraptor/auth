@@ -18,7 +18,7 @@ class AccountState extends Equatable {
     List<Account>? accounts,
     bool? hasReachedMax,
   }) {
-    return AccountState(status: status ?? this.status, accounts: accounts ?? this.accounts, hasReachedMax: hasReachedMax ?? this.hasReachedMax)
+    return AccountState(status: status ?? this.status, accounts: accounts ?? this.accounts, hasReachedMax: hasReachedMax ?? this.hasReachedMax);
   }
 
     @override
