@@ -1,5 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:equatable/equatable.dart';
+import 'package:otp/otp.dart';
 
 class Account extends Equatable {
   const Account(
@@ -10,6 +11,16 @@ class Account extends Equatable {
 
   @override
   List<Object> get props => [secret, website, username];
+
+  String code() {
+    return OTP
+        .generateTOTPCode(secret, DateTime.now().millisecondsSinceEpoch)
+        .toString();
+  }
+
+  String timeRemaining() {
+    return OTP.remainingSeconds().toString();
+  }
 }
 
 List<Account> fetchAccounts(int length) {

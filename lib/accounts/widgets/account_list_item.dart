@@ -12,7 +12,8 @@ class AccountListItem extends StatelessWidget {
       child: ListTile(
         title: Text(account.website),
         isThreeLine: true,
-        subtitle: Text(account.username),
+        subtitle: Text(account.code()),
+        trailing: Text(account.timeRemaining()),
         dense: true,
       ),
     );
