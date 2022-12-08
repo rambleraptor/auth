@@ -1,5 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:otp/otp.dart';
 
 class Account extends Equatable {
@@ -20,6 +21,16 @@ class Account extends Equatable {
 
   String timeRemaining() {
     return OTP.remainingSeconds().toString();
+  }
+}
+
+class AccountProvider extends ChangeNotifier {
+  final Account account;
+  AccountProvider(this.account);
+
+  void updateCode() {
+    account.code();
+    notifyListeners();
   }
 }
 

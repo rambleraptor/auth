@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auth/accounts/accounts.dart';
+import 'package:provider/provider.dart';
 
 class AccountListItem extends StatelessWidget {
   const AccountListItem({super.key, required this.account});
@@ -17,5 +18,20 @@ class AccountListItem extends StatelessWidget {
         dense: true,
       ),
     );
+  }
+}
+
+class AccountListItemWithProvider extends StatelessWidget {
+  const AccountListItemWithProvider({super.key, required this.account});
+
+  final Account account;
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<AccountProvider>(
+        create: (context) => AccountProvider(account),
+        child: Consumer<AccountProvider>(
+            builder: (context, accountProvider, child) =>
+                AccountListItem(account: accountProvider.account)));
   }
 }
