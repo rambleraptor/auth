@@ -21,10 +21,43 @@ class AccountListItem extends StatelessWidget {
   }
 }
 
-class AccountListItemWithProvider extends StatelessWidget {
-  const AccountListItemWithProvider({super.key, required this.account});
+class AccountListItemWithStream extends StatefulWidget {
+  const AccountListItemWithStream(
+      {super.key, required this.account, required this.stream});
 
   final Account account;
+  final Stream stream;
+
+  @override
+  State<AccountListItemWithStream> createState() =>
+      _AccountListItemWithStream();
+}
+
+class _AccountListItemWithStream extends State<AccountListItemWithStream> {
+  void initState() {
+    super.initState();
+    widget.stream.forEach((element) {
+      print("Printing inside stream");
+      Provider.of<AccountProvider>(context, listen: false)..updateCode();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<AccountProvider>(
+        create: (context) => AccountProvider(widget.account),
+        child: Consumer<AccountProvider>(
+            builder: (context, accountProvider, child) =>
+                AccountListItem(account: accountProvider.account)));
+  }
+}
+
+class AccountListItemWithProvider extends StatelessWidget {
+  const AccountListItemWithProvider(
+      {super.key, required this.account, required this.stream});
+
+  final Account account;
+  final Stream stream;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +65,7 @@ class AccountListItemWithProvider extends StatelessWidget {
         create: (context) => AccountProvider(account),
         child: Consumer<AccountProvider>(
             builder: (context, accountProvider, child) =>
-                AccountListItem(account: accountProvider.account)));
+                AccountListItemWithStream(
+                    account: accountProvider.account, stream: stream)));
   }
 }

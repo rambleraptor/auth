@@ -24,12 +24,16 @@ class AccountsList extends StatefulWidget {
 }
 
 class _AccountsListState extends State<AccountsList> {
+  final Stream _stream =
+      Stream.periodic(Duration(seconds: 1)).asBroadcastStream();
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
         itemCount: widget.accounts.length,
         itemBuilder: (context, index) {
-          return AccountListItem(account: widget.accounts[index]);
+          return AccountListItemWithProvider(
+              account: widget.accounts[index], stream: _stream);
         });
   }
 }
