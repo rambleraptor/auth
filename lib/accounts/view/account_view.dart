@@ -1,4 +1,5 @@
 import 'package:auth/accounts/models/accounts.dart';
+import 'package:auth/accounts/view/new_account_view.dart';
 import 'package:flutter/material.dart';
 import 'package:auth/accounts/widgets/account_list_item.dart';
 
@@ -11,7 +12,12 @@ class AccountsPage extends StatelessWidget {
         appBar: AppBar(title: const Text('Accounts')),
         body: AccountsList(accounts: fetchAccounts(10)),
         floatingActionButton: FloatingActionButton(
-            onPressed: () => {}, child: const Icon(Icons.add_rounded)));
+            onPressed: () => {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => NewManualAccountScreen(),
+                  ))
+                },
+            child: const Icon(Icons.add_rounded)));
   }
 }
 
