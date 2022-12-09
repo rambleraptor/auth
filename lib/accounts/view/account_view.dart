@@ -1,4 +1,4 @@
-import 'package:auth/accounts/accounts.dart';
+import 'package:auth/accounts/models/accounts.dart';
 import 'package:flutter/material.dart';
 import 'package:auth/accounts/widgets/account_list_item.dart';
 
