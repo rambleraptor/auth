@@ -38,7 +38,6 @@ class _AccountListItemWithStream extends State<AccountListItemWithStream> {
   void initState() {
     super.initState();
     widget.stream.forEach((element) {
-      print("Printing inside stream");
       Provider.of<AccountProvider>(context, listen: false)..updateCode();
     });
   }

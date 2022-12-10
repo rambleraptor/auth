@@ -1,5 +1,7 @@
 import 'package:auth/accounts/models/accounts.dart';
+import 'package:auth/accounts/models/accounts_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'account_list_item.dart';
 
@@ -18,11 +20,12 @@ class _AccountsListState extends State<AccountsList> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AccountsProvider>(context);
     return ListView.builder(
-        itemCount: widget.accounts.length,
+        itemCount: provider.accounts.length,
         itemBuilder: (context, index) {
           return AccountListItemWithProvider(
-              account: widget.accounts[index], stream: _stream);
+              account: provider.accounts[index], stream: _stream);
         });
   }
 }

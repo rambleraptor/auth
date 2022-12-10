@@ -1,5 +1,8 @@
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../models/accounts_provider.dart';
 
 class AccountManualForm extends StatefulWidget {
   const AccountManualForm({super.key});
@@ -46,8 +49,16 @@ class _AccountManualFormState extends State<AccountManualForm> {
           ),
           TextButton(
             child: const Text('Submit'),
-            onPressed: () => {
-              // TODO: save account.
+            onPressed: () {
+              final form = _formKey.currentState;
+              if (form!.validate()) {
+                form.save();
+                Provider.of<AccountsProvider>(context, listen: false)
+                    .addAccount(Account(
+                        secret: contents['secret'],
+                        username: contents['username'],
+                        website: contents['website']));
+              }
             },
           )
         ]));
