@@ -58,6 +58,7 @@ class _AccountManualFormState extends State<AccountManualForm> {
                         secret: contents['secret'],
                         username: contents['username'],
                         website: contents['website']));
+                Navigator.pop(context);
               }
             },
           )
