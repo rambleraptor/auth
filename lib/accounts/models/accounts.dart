@@ -18,8 +18,8 @@ class Account extends Equatable {
         .toString();
   }
 
-  String timeRemaining() {
-    return OTP.remainingSeconds().toString();
+  int timeRemaining() {
+    return OTP.remainingSeconds();
   }
 }
 

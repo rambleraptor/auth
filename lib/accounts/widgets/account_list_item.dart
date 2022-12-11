@@ -1,5 +1,6 @@
 import 'package:auth/accounts/models/account_provider.dart';
 import 'package:auth/accounts/models/accounts.dart';
+import 'package:auth/accounts/widgets/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,7 @@ class AccountListTile extends StatelessWidget {
         title: Text(account.website),
         isThreeLine: true,
         subtitle: Text(account.code()),
-        trailing: Text(account.timeRemaining()),
+        trailing: TimeRemainingWidget(time: account.timeRemaining()),
         dense: true,
       ),
     );
