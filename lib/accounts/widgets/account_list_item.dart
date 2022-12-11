@@ -3,8 +3,8 @@ import 'package:auth/accounts/models/accounts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AccountListItem extends StatelessWidget {
-  const AccountListItem({super.key, required this.account});
+class AccountListTile extends StatelessWidget {
+  const AccountListTile({super.key, required this.account});
 
   final Account account;
 
@@ -48,12 +48,12 @@ class _AccountListItemWithStream extends State<AccountListItemWithStream> {
         create: (context) => AccountProvider(widget.account),
         child: Consumer<AccountProvider>(
             builder: (context, accountProvider, child) =>
-                AccountListItem(account: accountProvider.account)));
+                AccountListTile(account: accountProvider.account)));
   }
 }
 
-class AccountListItemWithProvider extends StatelessWidget {
-  const AccountListItemWithProvider(
+class AccountListItem extends StatelessWidget {
+  const AccountListItem(
       {super.key, required this.account, required this.stream});
 
   final Account account;
