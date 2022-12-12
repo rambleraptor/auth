@@ -39,17 +39,19 @@ class _AccountListItemWithStream extends State<AccountListItemWithStream> {
   void initState() {
     super.initState();
     widget.stream.forEach((element) {
-      Provider.of<AccountProvider>(context, listen: false)..updateCode();
+      Provider.of<AccountProvider>(context, listen: false).updateCode();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<AccountProvider>(
-        create: (context) => AccountProvider(widget.account),
-        child: Consumer<AccountProvider>(
-            builder: (context, accountProvider, child) =>
-                AccountListTile(account: accountProvider.account)));
+      create: (context) => AccountProvider(widget.account),
+      child: Consumer<AccountProvider>(
+        builder: (context, accountProvider, child) =>
+            AccountListTile(account: accountProvider.account),
+      ),
+    );
   }
 }
 
@@ -63,10 +65,11 @@ class AccountListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<AccountProvider>(
-        create: (context) => AccountProvider(account),
-        child: Consumer<AccountProvider>(
-            builder: (context, accountProvider, child) =>
-                AccountListItemWithStream(
-                    account: accountProvider.account, stream: stream)));
+      create: (context) => AccountProvider(account),
+      child: Consumer<AccountProvider>(
+        builder: (context, accountProvider, child) => AccountListItemWithStream(
+            account: accountProvider.account, stream: stream),
+      ),
+    );
   }
 }

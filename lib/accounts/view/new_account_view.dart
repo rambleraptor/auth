@@ -7,7 +7,10 @@ class NewManualAccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Add New Account")),
-        body: const AccountManualForm());
+      appBar: AppBar(
+        title: const Text("Add New Account"),
+      ),
+      body: const AccountManualForm(),
+    );
   }
 }
