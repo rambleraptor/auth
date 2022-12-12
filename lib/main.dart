@@ -15,15 +15,19 @@ class AuthApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<AccountsProvider>(
-        create: (context) => AccountsProvider(fetchAccounts(10),
-            Stream.periodic(Duration(seconds: 1)).asBroadcastStream()),
-        child: Consumer<AccountsProvider>(
-            builder: (context, accountsProvider, child) => MaterialApp(
-                  title: 'Accounts',
-                  theme: ThemeData(
-                    primarySwatch: Colors.blue,
-                  ),
-                  home: const AccountsPage(),
-                )));
+      create: (context) => AccountsProvider(
+        fetchAccounts(10),
+        Stream.periodic(Duration(seconds: 1)).asBroadcastStream(),
+      ),
+      child: Consumer<AccountsProvider>(
+        builder: (context, accountsProvider, child) => MaterialApp(
+          title: 'Accounts',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: const AccountsPage(),
+        ),
+      ),
+    );
   }
 }

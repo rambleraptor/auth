@@ -9,14 +9,22 @@ class AccountsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Accounts')),
-        body: AccountsList(accounts: fetchAccounts(10)),
-        floatingActionButton: FloatingActionButton(
-            onPressed: () => {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => NewManualAccountScreen(),
-                  ))
-                },
-            child: const Icon(Icons.add_rounded)));
+      appBar: AppBar(
+        title: const Text('Accounts'),
+      ),
+      body: AccountsList(
+        accounts: fetchAccounts(10),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => NewManualAccountScreen(),
+            ),
+          )
+        },
+        child: const Icon(Icons.add_rounded),
+      ),
+    );
   }
 }

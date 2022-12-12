@@ -19,10 +19,11 @@ class _AccountsListState extends State<AccountsList> {
   Widget build(BuildContext context) {
     var provider = Provider.of<AccountsProvider>(context);
     return ListView.builder(
-        itemCount: provider.accounts.length,
-        itemBuilder: (context, index) {
-          return AccountListItem(
-              account: provider.accounts[index], stream: provider.stream);
-        });
+      itemCount: provider.accounts.length,
+      itemBuilder: (context, index) {
+        return AccountListItem(
+            account: provider.accounts[index], stream: provider.stream);
+      },
+    );
   }
 }
