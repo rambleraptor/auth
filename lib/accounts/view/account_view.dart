@@ -2,7 +2,6 @@ import 'package:auth/accounts/models/accounts.dart';
 import 'package:auth/accounts/view/new_account_view.dart';
 import 'package:auth/accounts/widgets/account_list.dart';
 import 'package:flutter/material.dart';
-import 'package:auth/accounts/widgets/account_list_item.dart';
 
 class AccountsPage extends StatelessWidget {
   const AccountsPage({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TimeRemainingWidget extends StatelessWidget {
-  const TimeRemainingWidget({required this.time, this.max = 30});
+  const TimeRemainingWidget({super.key, required this.time, this.max = 30});
 
   // Time should be an int between 0-30 (representing number of seconds remaining)
   final int time;
@@ -26,6 +26,7 @@ class TimeRemainingWidget extends StatelessWidget {
       Text(
         time.toString(),
         textAlign: TextAlign.center,
+        textDirection: TextDirection.ltr,
         style: TextStyle(
           color: color(),
           leadingDistribution: TextLeadingDistribution.even,
