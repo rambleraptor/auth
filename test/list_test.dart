@@ -5,6 +5,8 @@ import 'package:auth/accounts/widgets/account_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'utils.dart';
+
 MaterialApp createWidget(Key key, AccountFetcher af) {
   return MaterialApp(
     title: key.toString(),
@@ -15,27 +17,6 @@ MaterialApp createWidget(Key key, AccountFetcher af) {
       ),
     ),
   );
-}
-
-// Overrides
-class TestAccountFetcher extends AccountFetcher {
-  TestAccountFetcher({required this.accounts});
-  final List<Account> accounts;
-
-  @override
-  List<Account> getAccounts(BuildContext context) {
-    return accounts;
-  }
-
-  @override
-  void addAccount(BuildContext context, Account account) {
-    accounts.add(account);
-  }
-
-  @override
-  Stream<dynamic> getStream(BuildContext context) {
-    return Stream.empty().asBroadcastStream();
-  }
 }
 
 void main() {
