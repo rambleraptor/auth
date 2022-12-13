@@ -21,6 +21,7 @@ class _AccountManualFormState extends State<AccountManualForm> {
         key: _formKey,
         child: Column(children: [
           TextFormField(
+            key: const Key('secret_form_field'),
             decoration: const InputDecoration(
               labelText: "Secret",
             ),
@@ -30,6 +31,7 @@ class _AccountManualFormState extends State<AccountManualForm> {
             validator: mustNotBeEmpty,
           ),
           TextFormField(
+            key: const Key('website_form_field'),
             decoration: const InputDecoration(
               labelText: "Website",
             ),
@@ -39,6 +41,7 @@ class _AccountManualFormState extends State<AccountManualForm> {
             },
           ),
           TextFormField(
+            key: const Key('username_form_field'),
             decoration: const InputDecoration(
               labelText: "Username",
             ),
