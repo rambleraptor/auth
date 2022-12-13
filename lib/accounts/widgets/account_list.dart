@@ -1,6 +1,4 @@
-import 'package:auth/accounts/models/accounts_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../models/account_fetcher.dart';
 import 'account_list_item.dart';
