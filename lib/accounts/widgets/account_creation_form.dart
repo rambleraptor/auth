@@ -1,11 +1,11 @@
+import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../models/accounts_provider.dart';
 
 class AccountManualForm extends StatefulWidget {
-  const AccountManualForm({super.key});
+  const AccountManualForm({super.key, required this.fetcher});
+
+  final AccountFetcher fetcher;
 
   @override
   State<AccountManualForm> createState() => _AccountManualFormState();
@@ -53,11 +53,11 @@ class _AccountManualFormState extends State<AccountManualForm> {
               final form = _formKey.currentState;
               if (form!.validate()) {
                 form.save();
-                Provider.of<AccountsProvider>(context, listen: false)
-                    .addAccount(Account(
-                        secret: contents['secret'],
-                        username: contents['username'],
-                        website: contents['website']));
+                Account account = Account(
+                    secret: contents['secret'],
+                    username: contents['username'],
+                    website: contents['website']);
+                widget.fetcher.addAccount(context, account);
                 Navigator.pop(context);
               }
             },

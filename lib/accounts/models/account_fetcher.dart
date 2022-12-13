@@ -11,8 +11,10 @@ abstract class AccountFetcher {
 }
 
 class AccountProviderFetcher extends AccountFetcher {
+  AccountProviderFetcher();
+
   AccountsProvider _getProvider(BuildContext context) {
-    return Provider.of<AccountsProvider>(context);
+    return Provider.of<AccountsProvider>(context, listen: false);
   }
 
   @override

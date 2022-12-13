@@ -4,7 +4,9 @@ import 'package:auth/accounts/widgets/account_list.dart';
 import 'package:flutter/material.dart';
 
 class AccountsPage extends StatelessWidget {
-  const AccountsPage({super.key});
+  const AccountsPage({super.key, required this.fetcher});
+
+  final AccountFetcher fetcher;
 
   @override
   Widget build(BuildContext context) {
@@ -13,13 +15,13 @@ class AccountsPage extends StatelessWidget {
         title: const Text('Accounts'),
       ),
       body: AccountsList(
-        fetcher: AccountProviderFetcher(),
+        fetcher: fetcher,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => const NewManualAccountScreen(),
+              builder: (context) => NewManualAccountScreen(fetcher: fetcher),
             ),
           )
         },
