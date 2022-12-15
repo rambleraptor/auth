@@ -14,11 +14,13 @@ class AccountsList extends StatelessWidget {
       valueListenable: fetcher.accountListener(),
       builder: (context, value, child) {
         return ListView.builder(
-          itemCount: fetcher.getAccounts(context).length,
+          itemCount: fetcher.getAccounts().length,
           itemBuilder: (context, index) {
             return AccountListItem(
-                account: fetcher.getAccount(context, index),
-                stream: fetcher.stream);
+              account: fetcher.getAccount(index),
+              stream: fetcher.stream,
+              controller: fetcher,
+            );
           },
         );
       },
