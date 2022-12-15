@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 abstract class AbstractAccountController {
