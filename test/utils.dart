@@ -8,7 +8,9 @@ class TestAccountFetcher extends AbstractAccountController {
   final List<Account> accounts;
 
   @override
-  Future init() {}
+  Future init() async {
+    return;
+  }
 
   @override
   ValueListenable accountListener() {

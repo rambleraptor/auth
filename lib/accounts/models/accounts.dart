@@ -31,6 +31,10 @@ class Account extends Equatable {
   int timeRemaining() {
     return OTP.remainingSeconds();
   }
+
+  void updateCode() {
+    code();
+  }
 }
 
 List<Account> fetchAccounts(int length) {
