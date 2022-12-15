@@ -17,8 +17,10 @@ class AccountsList extends StatelessWidget {
           itemCount: fetcher.getAccounts(context).length,
           itemBuilder: (context, index) {
             return AccountListItem(
-                account: fetcher.getAccount(context, index),
-                stream: fetcher.stream);
+              account: fetcher.getAccount(context, index),
+              stream: fetcher.stream,
+              controller: fetcher,
+            );
           },
         );
       },

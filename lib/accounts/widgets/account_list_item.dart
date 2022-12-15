@@ -1,15 +1,30 @@
+import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:auth/accounts/widgets/timer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class AccountListTile extends StatelessWidget {
-  const AccountListTile({super.key, required this.account});
+  const AccountListTile(
+      {super.key, required this.account, required this.controller});
 
-  final Account account;
+  final SavedAccount account;
+  final AbstractAccountController controller;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return Slidable(
+      key: ValueKey(account.id),
+      endActionPane: ActionPane(motion: const ScrollMotion(), children: [
+        SlidableAction(
+          onPressed: (context) {
+            controller.deleteAccount(account);
+          },
+          backgroundColor: Colors.red,
+          icon: Icons.delete,
+          label: 'Delete',
+        ),
+      ]),
       child: ListTile(
         title: Text(account.website),
         isThreeLine: true,
@@ -23,10 +38,14 @@ class AccountListTile extends StatelessWidget {
 
 class AccountListItem extends StatefulWidget {
   const AccountListItem(
-      {super.key, required this.account, required this.stream});
+      {super.key,
+      required this.account,
+      required this.stream,
+      required this.controller});
 
-  final Account account;
+  final SavedAccount account;
   final Stream stream;
+  final AbstractAccountController controller;
 
   @override
   State<AccountListItem> createState() => _AccountListItem();
@@ -44,7 +63,8 @@ class _AccountListItem extends State<AccountListItem> {
     return StreamBuilder(
       stream: widget.stream,
       builder: (context, snapshot) {
-        return AccountListTile(account: widget.account);
+        return AccountListTile(
+            account: widget.account, controller: widget.controller);
       },
     );
   }
