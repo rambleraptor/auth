@@ -1,14 +1,15 @@
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/view/account_view.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import 'accounts/models/accounts.dart';
+AccountController createController() {
+  return AccountController(
+    stream: Stream.periodic(const Duration(seconds: 1)).asBroadcastStream(),
+  );
+}
 
 void main() async {
-  AccountController controller = AccountController(
-    stream: Stream.periodic(Duration(seconds: 1)).asBroadcastStream(),
-  );
+  AccountController controller = createController();
   await controller.init();
   runApp(
     AuthApp(

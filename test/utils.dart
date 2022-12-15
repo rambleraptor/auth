@@ -27,12 +27,13 @@ class TestAccountFetcher extends AbstractAccountController {
     accounts.add(account);
   }
 
+  @override
   Account getAccount(BuildContext context, int index) {
     return accounts[index];
   }
 
   @override
   Stream<dynamic> get stream {
-    return Stream.empty().asBroadcastStream();
+    return const Stream.empty().asBroadcastStream();
   }
 }

@@ -1,8 +1,6 @@
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:auth/accounts/view/new_account_view.dart';
-import 'package:auth/accounts/widgets/account_list_item.dart';
-import 'package:auth/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

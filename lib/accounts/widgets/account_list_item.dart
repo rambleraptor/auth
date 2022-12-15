@@ -1,7 +1,6 @@
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:auth/accounts/widgets/timer.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class AccountListTile extends StatelessWidget {
   const AccountListTile({super.key, required this.account});
