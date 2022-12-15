@@ -1,7 +1,6 @@
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 class TestAccountFetcher extends AbstractAccountController {
   TestAccountFetcher({required this.accounts});
@@ -19,7 +18,7 @@ class TestAccountFetcher extends AbstractAccountController {
   }
 
   @override
-  List<SavedAccount> getAccounts(BuildContext context) {
+  List<SavedAccount> getAccounts() {
     return accounts;
   }
 
@@ -30,7 +29,7 @@ class TestAccountFetcher extends AbstractAccountController {
   }
 
   @override
-  SavedAccount getAccount(BuildContext context, int index) {
+  SavedAccount getAccount(int index) {
     return accounts[index];
   }
 

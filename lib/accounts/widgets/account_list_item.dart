@@ -4,6 +4,27 @@ import 'package:auth/accounts/widgets/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+class ActionListTileDeleteAction extends StatelessWidget {
+  const ActionListTileDeleteAction(
+      {super.key, required this.account, required this.controller});
+
+  final SavedAccount account;
+  final AbstractAccountController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return SlidableAction(
+      key: ValueKey("${account.id}_delete_button"),
+      onPressed: (context) {
+        controller.deleteAccount(account);
+      },
+      backgroundColor: Colors.red,
+      icon: Icons.delete,
+      label: 'Delete',
+    );
+  }
+}
+
 class AccountListTile extends StatelessWidget {
   const AccountListTile(
       {super.key, required this.account, required this.controller});
@@ -14,16 +35,9 @@ class AccountListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      key: ValueKey(account.id),
+      key: ValueKey("${account.id}_slidable"),
       endActionPane: ActionPane(motion: const ScrollMotion(), children: [
-        SlidableAction(
-          onPressed: (context) {
-            controller.deleteAccount(account);
-          },
-          backgroundColor: Colors.red,
-          icon: Icons.delete,
-          label: 'Delete',
-        ),
+        ActionListTileDeleteAction(account: account, controller: controller)
       ]),
       child: ListTile(
         title: Text(account.website),

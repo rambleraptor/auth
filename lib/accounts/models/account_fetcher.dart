@@ -2,15 +2,14 @@ import 'dart:developer';
 
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 abstract class AbstractAccountController {
   Future init();
   ValueListenable accountListener();
 
-  Iterable<SavedAccount> getAccounts(BuildContext context);
-  SavedAccount getAccount(BuildContext context, int index);
+  Iterable<SavedAccount> getAccounts();
+  SavedAccount getAccount(int index);
   void addAccount(Account account);
   void deleteAccount(SavedAccount account);
 
@@ -46,13 +45,13 @@ class AccountController extends AbstractAccountController {
   }
 
   @override
-  Iterable<SavedAccount> getAccounts(BuildContext context) {
+  Iterable<SavedAccount> getAccounts() {
     var accounts = _box().values;
     return accounts.cast<SavedAccount>();
   }
 
   @override
-  SavedAccount getAccount(BuildContext context, int index) {
+  SavedAccount getAccount(int index) {
     return _box().getAt(index)!;
   }
 
