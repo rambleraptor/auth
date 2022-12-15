@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'accounts/models/accounts.dart';
-import 'accounts/models/accounts_provider.dart';
 
 void main() async {
   AccountController controller = AccountController(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +60,7 @@ class AccountController extends AbstractAccountController {
   void addAccount(Account account) {
     var numAccounts = _box().values.length;
     String id = (numAccounts + 1).toString();
+    log("Adding account $account with id $id");
     _box().put(id, account);
   }
 }

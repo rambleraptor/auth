@@ -36,8 +36,7 @@ class Account extends Equatable {
 List<Account> fetchAccounts(int length) {
   List<Account> list = [];
   nouns.take(length).forEach((element) {
-    list.add(
-        Account(secret: element, website: "website", username: "username"));
+    list.add(Account(secret: element, website: element, username: element));
   });
   return list;
 }
