@@ -8,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'utils.dart';
 
-MaterialApp createWidget(Key key, AccountFetcher af) {
+MaterialApp createWidget(Key key, AbstractAccountController af) {
   return MaterialApp(
     title: key.toString(),
     home: Scaffold(

@@ -6,39 +6,20 @@ import 'package:provider/provider.dart';
 import 'accounts/models/accounts.dart';
 import 'accounts/models/accounts_provider.dart';
 
-void main() {
-  runApp(AuthAppWithProvider());
-}
-
-class AuthAppWithProvider extends StatelessWidget {
-  const AuthAppWithProvider({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AccountsProvider>(
-      create: (context) => AccountsProvider(
-        fetchAccounts(10),
-        Stream.periodic(Duration(seconds: 1)).asBroadcastStream(),
+void main() async {
+  runApp(
+    AuthApp(
+      controller: AccountController(
+        stream: Stream.periodic(Duration(seconds: 1)).asBroadcastStream(),
       ),
-      child: Consumer<AccountsProvider>(
-        builder: (context, accountsProvider, child) => MaterialApp(
-          title: 'Accounts',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: AccountsPage(
-            fetcher: AccountProviderFetcher(),
-          ),
-        ),
-      ),
-    );
-  }
+    ),
+  );
 }
 
 class AuthApp extends StatelessWidget {
-  const AuthApp({super.key, required this.fetcher});
-  // This widget is the root of your application.
-  final AccountFetcher fetcher;
+  const AuthApp({super.key, required this.controller});
+
+  final AccountController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +28,9 @@ class AuthApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AccountsPage(fetcher: fetcher),
+      home: AccountsPage(
+        fetcher: controller,
+      ),
     );
   }
 }

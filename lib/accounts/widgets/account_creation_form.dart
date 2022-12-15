@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class AccountManualForm extends StatefulWidget {
   const AccountManualForm({super.key, required this.fetcher});
 
-  final AccountFetcher fetcher;
+  final AbstractAccountController fetcher;
 
   @override
   State<AccountManualForm> createState() => _AccountManualFormState();

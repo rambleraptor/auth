@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class NewManualAccountScreen extends StatelessWidget {
   const NewManualAccountScreen({super.key, required this.fetcher});
 
-  final AccountFetcher fetcher;
+  final AbstractAccountController fetcher;
 
   @override
   Widget build(BuildContext context) {
