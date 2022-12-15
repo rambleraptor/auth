@@ -60,7 +60,7 @@ class _AccountManualFormState extends State<AccountManualForm> {
                     secret: contents['secret'],
                     username: contents['username'],
                     website: contents['website']);
-                widget.fetcher.addAccount(context, account);
+                widget.fetcher.addAccount(account);
                 Navigator.pop(context);
               }
             },

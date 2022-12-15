@@ -1,17 +1,16 @@
 import 'package:auth/accounts/models/accounts.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-import 'accounts_provider.dart';
 
 abstract class AbstractAccountController {
   void init();
+  ValueListenable accountListener();
 
   Iterable<Account> getAccounts(BuildContext context);
   Account getAccount(BuildContext context, int index);
-  void addAccount(BuildContext context, Account account);
+  void addAccount(Account account);
 
   Stream<dynamic> get stream;
 }
@@ -27,14 +26,21 @@ class AccountController extends AbstractAccountController {
     await Hive.initFlutter();
     Hive.registerAdapter(AccountAdapter());
     await Hive.openBox<Account>('accounts');
+
+    if (kDebugMode) {
+      fetchAccounts(10).forEach((account) {
+        addAccount(account);
+      });
+    }
+  }
+
+  @override
+  ValueListenable accountListener() {
+    return _box().listenable();
   }
 
   Box<Account> _box() {
     return Hive.box('accounts');
-  }
-
-  AccountsProvider _getProvider(BuildContext context) {
-    return Provider.of<AccountsProvider>(context, listen: false);
   }
 
   @override
@@ -49,7 +55,7 @@ class AccountController extends AbstractAccountController {
   }
 
   @override
-  void addAccount(BuildContext context, Account account) {
+  void addAccount(Account account) {
     var numAccounts = _box().values.length;
     String id = (numAccounts + 1).toString();
     _box().put(id, account);

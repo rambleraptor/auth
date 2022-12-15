@@ -1,5 +1,6 @@
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TestAccountFetcher extends AbstractAccountController {
@@ -10,12 +11,18 @@ class TestAccountFetcher extends AbstractAccountController {
   void init() {}
 
   @override
+  @override
+  ValueListenable accountListener() {
+    return ValueNotifier(null);
+  }
+
+  @override
   List<Account> getAccounts(BuildContext context) {
     return accounts;
   }
 
   @override
-  void addAccount(BuildContext context, Account account) {
+  void addAccount(Account account) {
     accounts.add(account);
   }
 
