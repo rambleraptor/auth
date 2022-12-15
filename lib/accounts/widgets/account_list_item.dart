@@ -1,4 +1,3 @@
-import 'package:auth/accounts/models/account_provider.dart';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:auth/accounts/widgets/timer.dart';
 import 'package:flutter/material.dart';
@@ -23,39 +22,7 @@ class AccountListTile extends StatelessWidget {
   }
 }
 
-class AccountListItemWithStream extends StatefulWidget {
-  const AccountListItemWithStream(
-      {super.key, required this.account, required this.stream});
-
-  final Account account;
-  final Stream stream;
-
-  @override
-  State<AccountListItemWithStream> createState() =>
-      _AccountListItemWithStream();
-}
-
-class _AccountListItemWithStream extends State<AccountListItemWithStream> {
-  void initState() {
-    super.initState();
-    widget.stream.forEach((element) {
-      Provider.of<AccountProvider>(context, listen: false).updateCode();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AccountProvider>(
-      create: (context) => AccountProvider(widget.account),
-      child: Consumer<AccountProvider>(
-        builder: (context, accountProvider, child) =>
-            AccountListTile(account: accountProvider.account),
-      ),
-    );
-  }
-}
-
-class AccountListItem extends StatelessWidget {
+class AccountListItem extends StatefulWidget {
   const AccountListItem(
       {super.key, required this.account, required this.stream});
 
@@ -63,13 +30,23 @@ class AccountListItem extends StatelessWidget {
   final Stream stream;
 
   @override
+  State<AccountListItem> createState() => _AccountListItem();
+}
+
+class _AccountListItem extends State<AccountListItem> {
+  @override
+  void initState() {
+    super.initState();
+    widget.account.updateCode();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AccountProvider>(
-      create: (context) => AccountProvider(account),
-      child: Consumer<AccountProvider>(
-        builder: (context, accountProvider, child) => AccountListItemWithStream(
-            account: accountProvider.account, stream: stream),
-      ),
+    return StreamBuilder(
+      stream: widget.stream,
+      builder: (context, snapshot) {
+        return AccountListTile(account: widget.account);
+      },
     );
   }
 }

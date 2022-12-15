@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class AccountsPage extends StatelessWidget {
   const AccountsPage({super.key, required this.fetcher});
 
-  final AccountFetcher fetcher;
+  final AbstractAccountController fetcher;
 
   @override
   Widget build(BuildContext context) {

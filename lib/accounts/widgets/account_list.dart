@@ -6,16 +6,21 @@ import 'account_list_item.dart';
 class AccountsList extends StatelessWidget {
   const AccountsList({super.key, required this.fetcher});
 
-  final AccountFetcher fetcher;
+  final AbstractAccountController fetcher;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: fetcher.getAccounts(context).length,
-      itemBuilder: (context, index) {
-        return AccountListItem(
-            account: fetcher.getAccounts(context)[index],
-            stream: fetcher.getStream(context));
+    return ValueListenableBuilder(
+      valueListenable: fetcher.accountListener(),
+      builder: (context, value, child) {
+        return ListView.builder(
+          itemCount: fetcher.getAccounts(context).length,
+          itemBuilder: (context, index) {
+            return AccountListItem(
+                account: fetcher.getAccount(context, index),
+                stream: fetcher.stream);
+          },
+        );
       },
     );
   }

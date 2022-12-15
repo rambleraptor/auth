@@ -1,34 +1,66 @@
+import 'dart:developer';
+
 import 'package:auth/accounts/models/accounts.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-import 'accounts_provider.dart';
+abstract class AbstractAccountController {
+  Future init();
+  ValueListenable accountListener();
 
-abstract class AccountFetcher {
-  List<Account> getAccounts(BuildContext context);
-  void addAccount(BuildContext context, Account account);
-  Stream<dynamic> getStream(BuildContext context);
+  Iterable<Account> getAccounts(BuildContext context);
+  Account getAccount(BuildContext context, int index);
+  void addAccount(Account account);
+
+  Stream<dynamic> get stream;
 }
 
-class AccountProviderFetcher extends AccountFetcher {
-  AccountProviderFetcher();
+class AccountController extends AbstractAccountController {
+  AccountController({required this.stream});
 
-  AccountsProvider _getProvider(BuildContext context) {
-    return Provider.of<AccountsProvider>(context, listen: false);
+  @override
+  final Stream stream;
+
+  @override
+  Future init() async {
+    await Hive.initFlutter();
+    Hive.registerAdapter(AccountAdapter());
+    await Hive.openBox<Account>('accounts');
+
+    if (kDebugMode) {
+      fetchAccounts(10).forEach((account) {
+        addAccount(account);
+      });
+    }
   }
 
   @override
-  List<Account> getAccounts(BuildContext context) {
-    return _getProvider(context).accounts;
+  ValueListenable accountListener() {
+    return _box().listenable();
+  }
+
+  Box<Account> _box() {
+    return Hive.box('accounts');
   }
 
   @override
-  void addAccount(BuildContext context, Account account) {
-    _getProvider(context).addAccount(account);
+  Iterable<Account> getAccounts(BuildContext context) {
+    var accounts = _box().values;
+    return accounts.cast<Account>();
   }
 
   @override
-  Stream<dynamic> getStream(BuildContext context) {
-    return _getProvider(context).stream;
+  Account getAccount(BuildContext context, int index) {
+    return _box().getAt(index)!;
+  }
+
+  @override
+  void addAccount(Account account) {
+    var numAccounts = _box().values.length;
+    String id = (numAccounts + 1).toString();
+    log("Adding account $account with id $id");
+    _box().put(id, account);
   }
 }
