@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 class TestAccountFetcher extends AbstractAccountController {
   TestAccountFetcher({required this.accounts});
-  final List<Account> accounts;
+  final List<SavedAccount> accounts;
+  int counter = 0;
 
   @override
   Future init() async {
@@ -18,17 +19,18 @@ class TestAccountFetcher extends AbstractAccountController {
   }
 
   @override
-  List<Account> getAccounts(BuildContext context) {
+  List<SavedAccount> getAccounts(BuildContext context) {
     return accounts;
   }
 
   @override
   void addAccount(Account account) {
-    accounts.add(account);
+    counter += 1;
+    accounts.add(createSavedAccount(account, counter.toString()));
   }
 
   @override
-  Account getAccount(BuildContext context, int index) {
+  SavedAccount getAccount(BuildContext context, int index) {
     return accounts[index];
   }
 
@@ -36,4 +38,17 @@ class TestAccountFetcher extends AbstractAccountController {
   Stream<dynamic> get stream {
     return const Stream.empty().asBroadcastStream();
   }
+
+  void deleteAccount(SavedAccount account) {
+    accounts.remove(account);
+  }
+}
+
+List<SavedAccount> fetchSavedAccounts(int length) {
+  List<Account> accounts = fetchAccounts(length);
+  List<SavedAccount> savedAccounts = [];
+  for (int i = 0; i < length; i++) {
+    savedAccounts.add(createSavedAccount(accounts[i], i.toString()));
+  }
+  return savedAccounts;
 }

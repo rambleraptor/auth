@@ -6,17 +6,49 @@ import 'package:otp/otp.dart';
 part 'accounts.g.dart';
 
 @HiveType(typeId: 0)
+class SavedAccount extends Account {
+  SavedAccount(
+      {required this.id,
+      required this.secret,
+      required this.website,
+      required this.username})
+      : super(secret: secret, website: website, username: username) {
+    createdAt = DateTime.now();
+  }
+
+  @HiveField(0)
+  final String id;
+
+  @HiveField(1)
+  @override
+  // ignore: overridden_fields
+  final String secret;
+
+  @HiveField(2)
+  @override
+  // ignore: overridden_fields
+  final String website;
+
+  @HiveField(3)
+  @override
+  // ignore: overridden_fields
+  final String username;
+
+  @HiveField(4)
+  late DateTime createdAt;
+
+  @override
+  List<Object> get props => [id];
+}
+
 class Account extends Equatable {
   const Account(
       {required this.secret, required this.website, required this.username});
 
-  @HiveField(0)
   final String secret;
 
-  @HiveField(1)
   final String website;
 
-  @HiveField(2)
   final String username;
 
   @override
@@ -43,4 +75,12 @@ List<Account> fetchAccounts(int length) {
     list.add(Account(secret: element, website: element, username: element));
   });
   return list;
+}
+
+SavedAccount createSavedAccount(Account account, String id) {
+  return SavedAccount(
+      id: id,
+      secret: account.secret,
+      website: account.website,
+      username: account.username);
 }

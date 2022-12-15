@@ -27,7 +27,7 @@ void main() {
       createWidget(
         testKey,
         TestAccountFetcher(
-          accounts: fetchAccounts(numAccounts),
+          accounts: fetchSavedAccounts(numAccounts),
         ),
       ),
     );

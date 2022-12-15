@@ -22,7 +22,7 @@ void main() {
   testWidgets('AccountList displays account', (tester) async {
     // Create app
     const numAccounts = 5;
-    var fetcher = TestAccountFetcher(accounts: fetchAccounts(numAccounts));
+    var fetcher = TestAccountFetcher(accounts: fetchSavedAccounts(numAccounts));
     const testKey = Key('K');
     await tester.pumpWidget(createWidget(testKey, fetcher));
 
