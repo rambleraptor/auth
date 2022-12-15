@@ -5,7 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 abstract class AbstractAccountController {
-  void init();
+  Future init();
   ValueListenable accountListener();
 
   Iterable<Account> getAccounts(BuildContext context);
@@ -22,7 +22,7 @@ class AccountController extends AbstractAccountController {
   final Stream stream;
 
   @override
-  void init() async {
+  Future init() async {
     await Hive.initFlutter();
     Hive.registerAdapter(AccountAdapter());
     await Hive.openBox<Account>('accounts');

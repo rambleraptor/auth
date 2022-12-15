@@ -7,11 +7,13 @@ import 'accounts/models/accounts.dart';
 import 'accounts/models/accounts_provider.dart';
 
 void main() async {
+  AccountController controller = AccountController(
+    stream: Stream.periodic(Duration(seconds: 1)).asBroadcastStream(),
+  );
+  await controller.init();
   runApp(
     AuthApp(
-      controller: AccountController(
-        stream: Stream.periodic(Duration(seconds: 1)).asBroadcastStream(),
-      ),
+      controller: controller,
     ),
   );
 }

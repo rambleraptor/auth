@@ -8,9 +8,8 @@ class TestAccountFetcher extends AbstractAccountController {
   final List<Account> accounts;
 
   @override
-  void init() {}
+  Future init() {}
 
-  @override
   @override
   ValueListenable accountListener() {
     return ValueNotifier(null);
