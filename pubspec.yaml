@@ -69,9 +69,43 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/twofactorauth/img/a/
+    - assets/twofactorauth/img/b/
+    - assets/twofactorauth/img/c/
+    - assets/twofactorauth/img/d/
+    - assets/twofactorauth/img/e/
+    - assets/twofactorauth/img/f/
+    - assets/twofactorauth/img/g/
+    - assets/twofactorauth/img/h/
+    - assets/twofactorauth/img/i/
+    - assets/twofactorauth/img/j/
+    - assets/twofactorauth/img/k/
+    - assets/twofactorauth/img/l/
+    - assets/twofactorauth/img/m/
+    - assets/twofactorauth/img/n/
+    - assets/twofactorauth/img/o/
+    - assets/twofactorauth/img/p/
+    - assets/twofactorauth/img/q/
+    - assets/twofactorauth/img/r/
+    - assets/twofactorauth/img/s/
+    - assets/twofactorauth/img/t/
+    - assets/twofactorauth/img/u/
+    - assets/twofactorauth/img/v/
+    - assets/twofactorauth/img/w/
+    - assets/twofactorauth/img/x/
+    - assets/twofactorauth/img/y/
+    - assets/twofactorauth/img/z/
+    - assets/twofactorauth/img/0/
+    - assets/twofactorauth/img/1/
+    - assets/twofactorauth/img/2/
+    - assets/twofactorauth/img/3/
+    - assets/twofactorauth/img/4/
+    - assets/twofactorauth/img/5/
+    - assets/twofactorauth/img/6/
+    - assets/twofactorauth/img/7/
+    - assets/twofactorauth/img/8/
+    - assets/twofactorauth/img/9/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
