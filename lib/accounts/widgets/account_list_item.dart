@@ -1,6 +1,7 @@
 import 'package:auth/accounts/controllers/image_controller.dart';
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
+import 'package:auth/accounts/view/new_account_view.dart';
 import 'package:auth/accounts/widgets/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -26,6 +27,30 @@ class ActionListTileDeleteAction extends StatelessWidget {
   }
 }
 
+class ActionListTileEditAction extends StatelessWidget {
+  const ActionListTileEditAction(
+      {super.key, required this.account, required this.controller});
+
+  final SavedAccount account;
+  final AbstractAccountController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return SlidableAction(
+      key: ValueKey("${account.id}_delete_button"),
+      onPressed: (context) {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>
+              NewManualAccountScreen(fetcher: controller, account: account),
+        ));
+      },
+      backgroundColor: Colors.grey,
+      icon: Icons.edit,
+      label: 'Edit',
+    );
+  }
+}
+
 class AccountListTile extends StatelessWidget {
   const AccountListTile(
       {super.key,
@@ -42,6 +67,7 @@ class AccountListTile extends StatelessWidget {
     return Slidable(
       key: ValueKey("${account.id}_slidable"),
       endActionPane: ActionPane(motion: const ScrollMotion(), children: [
+        ActionListTileEditAction(account: account, controller: controller),
         ActionListTileDeleteAction(account: account, controller: controller)
       ]),
       child: ListTile(

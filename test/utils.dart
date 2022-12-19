@@ -43,6 +43,12 @@ class TestAccountFetcher extends AbstractAccountController {
   void deleteAccount(SavedAccount account) {
     accounts.remove(account);
   }
+
+  @override
+  void updateAccount(SavedAccount account, MutableAccount newValues) {
+    accounts[int.parse(account.id)] =
+        createSavedAccount(createAccountFromMutable(newValues), account.id);
+  }
 }
 
 List<SavedAccount> fetchSavedAccounts(int length) {

@@ -14,6 +14,7 @@ abstract class AbstractAccountController {
   SavedAccount getAccount(int index);
   void addAccount(Account account);
   void deleteAccount(SavedAccount account);
+  void updateAccount(SavedAccount account, MutableAccount newValues);
 
   Stream<dynamic> get stream;
 }
@@ -62,6 +63,7 @@ class AccountController extends AbstractAccountController {
   @override
   void addAccount(Account account) {
     var numAccounts = _box().values.length;
+    // TODO: I need a better ID method than this...
     String id = (numAccounts + 1).toString();
     SavedAccount savedAccount = createSavedAccount(account, id);
     log("Adding account $savedAccount with id $id");
@@ -72,12 +74,42 @@ class AccountController extends AbstractAccountController {
   void deleteAccount(SavedAccount account) {
     _box().delete(account.id);
   }
+
+  @override
+  void updateAccount(SavedAccount account, MutableAccount newValues) {
+    Account newAccount = createAccountFromMutable(newValues);
+    SavedAccount newSavedAccount = createSavedAccount(newAccount, account.id);
+    log("Updating account ${account.id}");
+    _box().put(account.id, newSavedAccount);
+  }
 }
 
+// This does not save an account!
+// It's really a private method needed to take an unsaved account + attach an id to it.
 SavedAccount createSavedAccount(Account account, String id) {
   return SavedAccount(
       id: id,
       secret: account.secret,
       website: account.website,
       username: account.username);
+}
+
+Account createAccountFromMutable(MutableAccount newAccount) {
+  if (!newAccount.isValid()) {
+    throw ("Cannot create account from invalid mutable account");
+  }
+  return Account(
+      secret: newAccount.secret!,
+      username: newAccount.username!,
+      website: newAccount.website!);
+}
+
+void getOrCreateAccount(SavedAccount? account, MutableAccount newAccount,
+    AbstractAccountController controller) {
+  if (account == null) {
+    Account immutableAccount = createAccountFromMutable(newAccount);
+    controller.addAccount(immutableAccount);
+    return;
+  }
+  controller.updateAccount(account, newAccount);
 }
