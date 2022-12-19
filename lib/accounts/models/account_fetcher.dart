@@ -4,6 +4,8 @@ import 'package:auth/accounts/models/accounts.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'account_seed.dart';
+
 abstract class AbstractAccountController {
   Future init();
   ValueListenable accountListener();
@@ -26,9 +28,11 @@ class AccountController extends AbstractAccountController {
   Future init() async {
     await Hive.initFlutter();
     Hive.registerAdapter(SavedAccountAdapter());
+    await Hive.deleteBoxFromDisk('accounts');
     await Hive.openBox<SavedAccount>('accounts');
 
     if (kDebugMode) {
+      // Delete box to avoid spillover.
       fetchAccounts(10).forEach((account) {
         addAccount(account);
       });
@@ -68,4 +72,12 @@ class AccountController extends AbstractAccountController {
   void deleteAccount(SavedAccount account) {
     _box().delete(account.id);
   }
+}
+
+SavedAccount createSavedAccount(Account account, String id) {
+  return SavedAccount(
+      id: id,
+      secret: account.secret,
+      website: account.website,
+      username: account.username);
 }

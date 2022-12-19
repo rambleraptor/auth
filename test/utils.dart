@@ -1,4 +1,5 @@
 import 'package:auth/accounts/models/account_fetcher.dart';
+import 'package:auth/accounts/models/account_seed.dart';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:flutter/foundation.dart';
 

@@ -103,10 +103,10 @@ flutter:
     - assets/twofactorauth/img/3/
     - assets/twofactorauth/img/4/
     - assets/twofactorauth/img/5/
-    - assets/twofactorauth/img/6/
+    # - assets/twofactorauth/img/6/
     - assets/twofactorauth/img/7/
-    - assets/twofactorauth/img/8/
-    - assets/twofactorauth/img/9/
+    # - assets/twofactorauth/img/8/
+    # - assets/twofactorauth/img/9/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

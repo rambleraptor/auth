@@ -1,3 +1,4 @@
+import 'package:auth/accounts/controllers/image_controller.dart';
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:auth/accounts/widgets/timer.dart';
@@ -27,10 +28,14 @@ class ActionListTileDeleteAction extends StatelessWidget {
 
 class AccountListTile extends StatelessWidget {
   const AccountListTile(
-      {super.key, required this.account, required this.controller});
+      {super.key,
+      required this.account,
+      required this.controller,
+      required this.imageController});
 
   final SavedAccount account;
   final AbstractAccountController controller;
+  final ImageController imageController;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +48,7 @@ class AccountListTile extends StatelessWidget {
         title: Text(account.website),
         isThreeLine: true,
         subtitle: Text(account.code()),
+        leading: imageController.widgetForWebsite(account.website),
         trailing: TimeRemainingWidget(time: account.timeRemaining()),
         dense: true,
       ),
@@ -78,7 +84,10 @@ class _AccountListItem extends State<AccountListItem> {
       stream: widget.stream,
       builder: (context, snapshot) {
         return AccountListTile(
-            account: widget.account, controller: widget.controller);
+          account: widget.account,
+          controller: widget.controller,
+          imageController: ImageFileController(),
+        );
       },
     );
   }
