@@ -20,7 +20,6 @@ class ImageFileController extends ImageController {
   }
 
   String fileName(String url) {
-    log("URL: $url");
     return "assets/twofactorauth/img/${url[0]}/$url.svg";
   }
 }
@@ -31,6 +30,5 @@ String stripUrl(String url) {
   }
   final uri = Uri.parse(url);
   List<String> parts = uri.host.split('.');
-  log("URL parts $parts");
   return parts.sublist(1).join('.');
 }
