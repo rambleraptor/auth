@@ -21,21 +21,64 @@ MaterialApp createWidget(
 }
 
 void main() {
-  testWidgets('AccountList displays account', (tester) async {
-    // Create app
-    const numAccounts = 5;
-    var fetcher = TestAccountFetcher(accounts: fetchSavedAccounts(numAccounts));
-    const testKey = Key('K');
-    await tester.pumpWidget(createWidget(testKey, fetcher, null));
+  group('AccountDetailsPage', () {
+    testWidgets('AccountList displays account after form fill', (tester) async {
+      // Create app
+      const numAccounts = 5;
+      var fetcher =
+          TestAccountFetcher(accounts: fetchSavedAccounts(numAccounts));
+      const testKey = Key('K');
+      await tester.pumpWidget(createWidget(testKey, fetcher, null));
 
-    // Fill out screen.
-    await tester.enterText(find.byKey(const Key('secret_form_field')), 'temp');
-    await tester.enterText(find.byKey(const Key('website_form_field')), 'temp');
-    await tester.enterText(
-        find.byKey(const Key('username_form_field')), 'temp');
+      // Fill out screen.
+      await tester.enterText(
+          find.byKey(const Key('secret_form_field')), 'temp');
+      await tester.enterText(
+          find.byKey(const Key('website_form_field')), 'temp');
+      await tester.enterText(
+          find.byKey(const Key('username_form_field')), 'temp');
 
-    await tester.tap(find.text('Submit'));
+      await tester.tap(find.text('Submit'));
 
-    expect(fetcher.accounts.length, numAccounts + 1);
+      expect(fetcher.accounts.length, numAccounts + 1);
+    });
+
+    testWidgets('Details Page shows values with account', (tester) async {
+      // Create app
+      const numAccounts = 5;
+      var fetcher =
+          TestAccountFetcher(accounts: fetchSavedAccounts(numAccounts));
+      const testKey = Key('K');
+      await tester.pumpWidget(createWidget(testKey, fetcher, null));
+
+      // Recreate page with account
+      SavedAccount account = fetcher.getAccount(0);
+      await tester.pumpWidget(createWidget(testKey, fetcher, account));
+
+      var finder = find.byType(TextFormField);
+      var items = finder.evaluate().toList();
+
+      expect(items.length, 3);
+      expect((items[0].widget as TextFormField).initialValue, account.secret);
+      expect((items[1].widget as TextFormField).initialValue, account.website);
+      expect((items[2].widget as TextFormField).initialValue, account.username);
+    });
+
+    testWidgets('Details Page shows no values without account', (tester) async {
+      // Create app
+      const numAccounts = 5;
+      var fetcher =
+          TestAccountFetcher(accounts: fetchSavedAccounts(numAccounts));
+      const testKey = Key('K');
+      await tester.pumpWidget(createWidget(testKey, fetcher, null));
+
+      var finder = find.byType(TextFormField);
+      var items = finder.evaluate().toList();
+
+      expect(items.length, 3);
+      expect((items[0].widget as TextFormField).initialValue, "");
+      expect((items[1].widget as TextFormField).initialValue, "");
+      expect((items[2].widget as TextFormField).initialValue, "");
+    });
   });
 }
