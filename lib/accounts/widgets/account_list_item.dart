@@ -1,3 +1,4 @@
+import 'package:auth/accounts/controllers/image_controller.dart';
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:auth/accounts/widgets/timer.dart';
@@ -27,10 +28,14 @@ class ActionListTileDeleteAction extends StatelessWidget {
 
 class AccountListTile extends StatelessWidget {
   const AccountListTile(
-      {super.key, required this.account, required this.controller});
+      {super.key,
+      required this.account,
+      required this.controller,
+      required this.imageController});
 
   final SavedAccount account;
   final AbstractAccountController controller;
+  final ImageController imageController;
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +44,74 @@ class AccountListTile extends StatelessWidget {
       endActionPane: ActionPane(motion: const ScrollMotion(), children: [
         ActionListTileDeleteAction(account: account, controller: controller)
       ]),
-      child: ListTile(
-        title: Text(account.website),
-        isThreeLine: true,
-        subtitle: Text(account.code()),
-        trailing: TimeRemainingWidget(time: account.timeRemaining()),
-        dense: true,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Container(
+                  height: 30,
+                  child: imageController.widgetForWebsite(account.website)),
+            ),
+            Expanded(
+                flex: 4,
+                child: _AccountDetails(
+                  account: account,
+                )),
+            Expanded(
+              flex: 1,
+              child: TimeRemainingWidget(
+                time: account.timeRemaining(),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AccountDetails extends StatelessWidget {
+  const _AccountDetails({required this.account});
+
+  final Account account;
+
+  @override
+  Widget build(BuildContext buildContext) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            account.website,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 14.0,
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 2.0),
+          ),
+          Text(
+            account.username,
+            style: const TextStyle(
+              fontSize: 10.0,
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 2.0),
+          ),
+          Text(
+            account.code(),
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 18.0,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -78,7 +145,10 @@ class _AccountListItem extends State<AccountListItem> {
       stream: widget.stream,
       builder: (context, snapshot) {
         return AccountListTile(
-            account: widget.account, controller: widget.controller);
+          account: widget.account,
+          controller: widget.controller,
+          imageController: ImageFileController(),
+        );
       },
     );
   }

@@ -1,4 +1,3 @@
-import 'package:english_words/english_words.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 import 'package:otp/otp.dart';
@@ -67,20 +66,4 @@ class Account extends Equatable {
   void updateCode() {
     code();
   }
-}
-
-List<Account> fetchAccounts(int length) {
-  List<Account> list = [];
-  nouns.take(length).forEach((element) {
-    list.add(Account(secret: element, website: element, username: element));
-  });
-  return list;
-}
-
-SavedAccount createSavedAccount(Account account, String id) {
-  return SavedAccount(
-      id: id,
-      secret: account.secret,
-      website: account.website,
-      username: account.username);
 }

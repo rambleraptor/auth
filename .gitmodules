@@ -1,0 +1,3 @@
+[submodule "assets/twofactorauth"]
+	path = assets/twofactorauth
+	url = git@github.com:2factorauth/twofactorauth.git
