@@ -1,7 +1,7 @@
 import 'package:auth/accounts/controllers/image_controller.dart';
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
-import 'package:auth/accounts/view/new_account_view.dart';
+import 'package:auth/accounts/view/account_details.dart';
 import 'package:auth/accounts/widgets/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -41,7 +41,7 @@ class ActionListTileEditAction extends StatelessWidget {
       onPressed: (context) {
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) =>
-              NewManualAccountScreen(fetcher: controller, account: account),
+              AccountDetailsScreen(fetcher: controller, account: account),
         ));
       },
       backgroundColor: Colors.grey,

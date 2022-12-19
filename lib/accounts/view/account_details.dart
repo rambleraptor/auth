@@ -3,9 +3,8 @@ import 'package:auth/accounts/models/accounts.dart';
 import 'package:auth/accounts/widgets/account_details.dart';
 import 'package:flutter/material.dart';
 
-class NewManualAccountScreen extends StatelessWidget {
-  const NewManualAccountScreen(
-      {super.key, required this.fetcher, this.account});
+class AccountDetailsScreen extends StatelessWidget {
+  const AccountDetailsScreen({super.key, required this.fetcher, this.account});
 
   final AbstractAccountController fetcher;
   final SavedAccount? account;
