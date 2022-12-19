@@ -80,5 +80,29 @@ void main() {
       expect((items[1].widget as TextFormField).initialValue, "");
       expect((items[2].widget as TextFormField).initialValue, "");
     });
+
+    testWidgets('AccountDetails page updates account', (tester) async {
+      // Create app
+      const numAccounts = 5;
+      var fetcher =
+          TestAccountFetcher(accounts: fetchSavedAccounts(numAccounts));
+      const testKey = Key('K');
+      SavedAccount account = fetcher.getAccount(1);
+      await tester.pumpWidget(createWidget(testKey, fetcher, account));
+
+      const newSecret = 'temp';
+
+      // Fill out screen.
+      await tester.enterText(
+          find.byKey(const Key('secret_form_field')), newSecret);
+
+      await tester.tap(find.text('Submit'));
+
+      // Account numbers should be same since accounts are the same.
+      expect(fetcher.accounts.length, numAccounts);
+
+      SavedAccount accountAgain = fetcher.getAccount(int.parse(account.id));
+      expect(accountAgain.secret, newSecret);
+    });
   });
 }
