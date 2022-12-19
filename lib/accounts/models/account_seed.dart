@@ -8,7 +8,6 @@ List<String> websites = [
   "www.facebook.com",
   "www.chase.com",
   "www.github.com",
-  "www.plex.tv",
   "www.cash.app",
   "www.fedex.com",
   "www.fidelity.com",
