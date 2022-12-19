@@ -34,7 +34,7 @@ class SavedAccount extends Account {
   final String username;
 
   @HiveField(4)
-  late DateTime createdAt;
+  late final DateTime createdAt;
 
   @override
   List<Object> get props => [id];
@@ -65,5 +65,21 @@ class Account extends Equatable {
 
   void updateCode() {
     code();
+  }
+}
+
+// MutableAccounts live only in memory.
+// They're used for forms, where the values can be changed by the user multiple times.
+class MutableAccount {
+  MutableAccount({this.secret = "", this.website = "", this.username = ""});
+
+  String? secret;
+
+  String? website;
+
+  String? username;
+
+  bool isValid() {
+    return secret != "" && website != "" && username != "";
   }
 }
