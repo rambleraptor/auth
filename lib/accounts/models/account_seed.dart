@@ -6,13 +6,12 @@ import 'accounts.dart';
 
 List<String> websites = [
   "www.facebook.com",
-  "www.microsoft.com",
-  "www.google.com",
   "www.chase.com",
   "www.github.com",
-  "www.apple.com",
   "www.plex.tv",
   "www.cash.app",
+  "www.fedex.com",
+  "www.fidelity.com",
 ];
 
 List<Account> fetchAccounts(int length) {
