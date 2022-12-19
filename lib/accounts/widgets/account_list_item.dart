@@ -44,29 +44,17 @@ class AccountListTile extends StatelessWidget {
       endActionPane: ActionPane(motion: const ScrollMotion(), children: [
         ActionListTileDeleteAction(account: account, controller: controller)
       ]),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Container(
-                  height: 30,
-                  child: imageController.widgetForWebsite(account.website)),
-            ),
-            Expanded(
-                flex: 4,
-                child: _AccountDetails(
-                  account: account,
-                )),
-            Expanded(
-              flex: 1,
-              child: TimeRemainingWidget(
-                time: account.timeRemaining(),
-              ),
-            )
-          ],
+      child: ListTile(
+        leading: SizedBox(
+          height: 40,
+          width: 40,
+          child: imageController.widgetForWebsite(account.website),
+        ),
+        title: _AccountDetails(
+          account: account,
+        ),
+        trailing: TimeRemainingWidget(
+          time: account.timeRemaining(),
         ),
       ),
     );
