@@ -30,7 +30,10 @@ class AccountSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Container();
+    List<SavedAccount> accounts = controller!.getAccounts().toList();
+    List<SavedAccount> filteredAccounts = findAccounts(query, accounts);
+    return AccountsListView(
+        accounts: filteredAccounts, stream: stream!, controller: controller!);
   }
 }
 
