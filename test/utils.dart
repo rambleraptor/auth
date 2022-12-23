@@ -53,8 +53,12 @@ class TestAccountFetcher extends AbstractAccountController {
 
 List<SavedAccount> fetchSavedAccounts(int length) {
   List<Account> accounts = fetchAccounts(length);
+  return saveAllAccounts(accounts);
+}
+
+List<SavedAccount> saveAllAccounts(List<Account> accounts) {
   List<SavedAccount> savedAccounts = [];
-  for (int i = 0; i < length; i++) {
+  for (int i = 0; i < accounts.length; i++) {
     savedAccounts.add(createSavedAccount(accounts[i], i.toString()));
   }
   return savedAccounts;
