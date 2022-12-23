@@ -2,6 +2,7 @@ import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/widgets/account_list.dart';
 import 'package:auth/accounts/widgets/account_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -84,5 +85,22 @@ void main() {
     await tester.tap(deleteFinder);
 
     expect(fetcher.getAccounts().length, numAccounts - 1);
+  });
+
+  testWidgets('AccountList will copy to clipboard', (tester) async {
+    const numAccounts = 1;
+    const testKey = Key('K');
+    var fetcher = TestAccountFetcher(accounts: fetchSavedAccounts(numAccounts));
+    await tester.pumpWidget(
+      createWidget(
+        testKey,
+        fetcher,
+      ),
+    );
+
+    await tester.tap(find.byType(AccountListItem));
+    expect(fetcher.getAccount(0).tapped, 1);
+    Clipboard.getData("text/plain")
+        .then((value) => expect(value!.text, fetcher.getAccount(0).code()));
   });
 }

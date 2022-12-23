@@ -49,6 +49,11 @@ class TestAccountFetcher extends AbstractAccountController {
     accounts[int.parse(account.id)] =
         createSavedAccount(createAccountFromMutable(newValues), account.id);
   }
+
+  @override
+  void incrementTapped(SavedAccount account) {
+    accounts[int.parse(account.id)].incrementTapped();
+  }
 }
 
 List<SavedAccount> fetchSavedAccounts(int length) {

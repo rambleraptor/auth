@@ -36,8 +36,15 @@ class SavedAccount extends Account {
   @HiveField(4)
   late final DateTime createdAt;
 
+  @HiveField(5)
+  int tapped = 0;
+
   @override
   List<Object> get props => [id];
+
+  void incrementTapped() {
+    tapped += 1;
+  }
 }
 
 class Account extends Equatable {
