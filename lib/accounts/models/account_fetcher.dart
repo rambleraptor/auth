@@ -15,6 +15,7 @@ abstract class AbstractAccountController {
   void addAccount(Account account);
   void deleteAccount(SavedAccount account);
   void updateAccount(SavedAccount account, MutableAccount newValues);
+  void incrementTapped(SavedAccount account);
 
   Stream<dynamic> get stream;
 }
@@ -81,6 +82,12 @@ class AccountController extends AbstractAccountController {
     SavedAccount newSavedAccount = createSavedAccount(newAccount, account.id);
     log("Updating account ${account.id}");
     _box().put(account.id, newSavedAccount);
+  }
+
+  @override
+  void incrementTapped(SavedAccount account) {
+    account.incrementTapped();
+    _box().put(account.id, account);
   }
 }
 

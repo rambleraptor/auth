@@ -4,6 +4,7 @@ import 'package:auth/accounts/models/accounts.dart';
 import 'package:auth/accounts/view/account_details.dart';
 import 'package:auth/accounts/widgets/timer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ActionListTileDeleteAction extends StatelessWidget {
@@ -71,6 +72,13 @@ class AccountListTile extends StatelessWidget {
         ActionListTileDeleteAction(account: account, controller: controller)
       ]),
       child: ListTile(
+        onTap: () {
+          Clipboard.setData(ClipboardData(text: account.code())).then((value) {
+            const snackBar = SnackBar(content: Text("Copied code"));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          });
+          controller.incrementTapped(account);
+        },
         leading: SizedBox(
           height: 40,
           width: 40,
