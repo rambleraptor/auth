@@ -68,7 +68,6 @@ class AccountListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log("Image $image");
     return Slidable(
       key: ValueKey("${account.id}_slidable"),
       endActionPane: ActionPane(motion: const ScrollMotion(), children: [
@@ -166,28 +165,31 @@ class _AccountListItem extends State<AccountListItem> {
 
     ImageFileController().pathForIssuer(widget.account.issuer).then((value) {
       setState(() {
-        _path = value;
+        _imagePath = value;
       });
     });
   }
 
-  String _path = "";
+  String _imagePath = "";
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: widget.stream,
       builder: (context, snapshot) {
-        Widget? image = null;
-        if (_path != "") {
-          image = SvgPicture.asset(_path);
-        }
         return AccountListTile(
           account: widget.account,
           controller: widget.controller,
-          image: image,
+          image: _picture(),
         );
       },
     );
+  }
+
+  Widget? _picture() {
+    if (_imagePath != "") {
+      return SvgPicture.asset(_imagePath);
+    }
+    return null;
   }
 }

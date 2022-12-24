@@ -7,6 +7,8 @@ import 'package:json_annotation/json_annotation.dart';
 part 'image_controller.g.dart';
 
 abstract class ImageController {
+  // pathForIssuer returns the path to an image file for a given issuer.
+  // It returns a Future because loading the image name may require async actions.
   Future<String> pathForIssuer(String issuer);
 }
 
@@ -14,7 +16,6 @@ class ImageFileController extends ImageController {
   @override
   Future<String> pathForIssuer(String issuer) {
     return jsonFile().then((root) {
-      log("Future has run");
       AegisIcon? icon = root.findIssuer(issuer);
       if (icon != null) {
         return icon.path();
