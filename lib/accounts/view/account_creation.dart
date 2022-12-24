@@ -17,17 +17,21 @@ class AccountCreationScreen extends StatelessWidget {
           title: const Text("Add an Account"),
         ),
         body: ListView(
+          padding: const EdgeInsets.all(8),
           children: [
-            MobileScanner(
-              allowDuplicates: false,
-              onDetect: (barcode, args) {
-                if (barcode.rawValue == null) {
-                  debugPrint('Failed to scan Barcode');
-                } else {
-                  final String code = barcode.rawValue!;
-                  log('Barcode found! $code');
-                }
-              },
+            SizedBox(
+              height: 300,
+              child: MobileScanner(
+                allowDuplicates: false,
+                onDetect: (barcode, args) {
+                  if (barcode.rawValue == null) {
+                    debugPrint('Failed to scan Barcode');
+                  } else {
+                    final String code = barcode.rawValue!;
+                    log('Barcode found! $code');
+                  }
+                },
+              ),
             ),
             ElevatedButton(
               onPressed: () => Navigator.of(context).push(MaterialPageRoute(
