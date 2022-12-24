@@ -39,14 +39,14 @@ class _AccountDetailsFormState extends State<AccountDetailsForm> {
           ListTile(
             leading: const Icon(Icons.public),
             title: TextFormField(
-              key: const Key('website_form_field'),
-              initialValue: widget.account?.website,
+              key: const Key('issuer_form_field'),
+              initialValue: widget.account?.issuer,
               decoration: const InputDecoration(
-                labelText: "Website",
+                labelText: "Issuer",
               ),
               validator: mustNotBeEmpty,
               onSaved: (website) {
-                updatedAccount.website = website;
+                updatedAccount.issuer = website;
               },
             ),
           ),

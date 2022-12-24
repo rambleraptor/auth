@@ -18,7 +18,7 @@ List<Account> fetchAccounts(int length) {
   nouns.take(length).forEach((element) {
     final random = Random();
     String website = websites[random.nextInt(websites.length)];
-    list.add(Account(secret: element, website: website, username: element));
+    list.add(Account(secret: element, issuer: website, username: element));
   });
   return list;
 }

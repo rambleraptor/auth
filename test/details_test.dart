@@ -34,7 +34,7 @@ void main() {
       await tester.enterText(
           find.byKey(const Key('secret_form_field')), 'temp');
       await tester.enterText(
-          find.byKey(const Key('website_form_field')), 'temp');
+          find.byKey(const Key('issuer_form_field')), 'temp');
       await tester.enterText(
           find.byKey(const Key('username_form_field')), 'temp');
 
@@ -60,7 +60,7 @@ void main() {
 
       expect(items.length, 3);
       expect((items[0].widget as TextFormField).initialValue, account.secret);
-      expect((items[1].widget as TextFormField).initialValue, account.website);
+      expect((items[1].widget as TextFormField).initialValue, account.issuer);
       expect((items[2].widget as TextFormField).initialValue, account.username);
     });
 

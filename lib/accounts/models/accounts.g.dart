@@ -19,7 +19,7 @@ class SavedAccountAdapter extends TypeAdapter<SavedAccount> {
     return SavedAccount(
       id: fields[0] as String,
       secret: fields[1] as String,
-      website: fields[2] as String,
+      issuer: fields[2] as String,
       username: fields[3] as String,
     )..createdAt = fields[4] as DateTime;
   }
@@ -33,7 +33,7 @@ class SavedAccountAdapter extends TypeAdapter<SavedAccount> {
       ..writeByte(1)
       ..write(obj.secret)
       ..writeByte(2)
-      ..write(obj.website)
+      ..write(obj.issuer)
       ..writeByte(3)
       ..write(obj.username)
       ..writeByte(4)

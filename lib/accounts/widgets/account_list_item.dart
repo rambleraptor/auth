@@ -82,7 +82,7 @@ class AccountListTile extends StatelessWidget {
         leading: SizedBox(
           height: 40,
           width: 40,
-          child: imageController.widgetForWebsite(account.website),
+          child: imageController.widgetForWebsite(account.issuer),
         ),
         title: _AccountDetails(
           account: account,
@@ -108,7 +108,7 @@ class _AccountDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            account.website,
+            account.issuer,
             style: const TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 14.0,
