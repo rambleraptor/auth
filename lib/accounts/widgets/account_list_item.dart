@@ -82,7 +82,7 @@ class AccountListTile extends StatelessWidget {
         leading: SizedBox(
           height: 40,
           width: 40,
-          child: imageController.widgetForWebsite(account.issuer),
+          child: imageController.widgetForIssuer(account.issuer),
         ),
         title: _AccountDetails(
           account: account,
