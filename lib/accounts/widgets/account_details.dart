@@ -7,6 +7,7 @@ class AccountDetailsForm extends StatefulWidget {
 
   final AbstractAccountController fetcher;
   final SavedAccount? account;
+  final MutableAccount? mutableAccount;
 
   @override
   State<AccountDetailsForm> createState() => _AccountDetailsFormState();
@@ -15,6 +16,15 @@ class AccountDetailsForm extends StatefulWidget {
 class _AccountDetailsFormState extends State<AccountDetailsForm> {
   final _formKey = GlobalKey<FormState>();
 
+  void initState() {
+    super.initState();
+    if (widget.mutableAccount != null) {
+      updatedAccount = widget.mutableAccount!;
+    }
+  }
+
+  // Stores form contents that have not been saved.
+  // Will be empty for existing accounts, but non-null for creation from QR code.
   MutableAccount updatedAccount = MutableAccount();
 
   @override
