@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auth/accounts/controllers/image_controller.dart';
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
@@ -6,6 +8,7 @@ import 'package:auth/accounts/widgets/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ActionListTileDeleteAction extends StatelessWidget {
   const ActionListTileDeleteAction(
@@ -57,11 +60,11 @@ class AccountListTile extends StatelessWidget {
       {super.key,
       required this.account,
       required this.controller,
-      required this.imageController});
+      required this.image});
 
   final SavedAccount account;
   final AbstractAccountController controller;
-  final ImageController imageController;
+  final Widget? image;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +85,7 @@ class AccountListTile extends StatelessWidget {
         leading: SizedBox(
           height: 40,
           width: 40,
-          child: imageController.widgetForWebsite(account.website),
+          child: image,
         ),
         title: _AccountDetails(
           account: account,
@@ -108,7 +111,7 @@ class _AccountDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            account.website,
+            account.issuer,
             style: const TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 14.0,
@@ -159,7 +162,15 @@ class _AccountListItem extends State<AccountListItem> {
   void initState() {
     super.initState();
     widget.account.updateCode();
+
+    ImageFileController().pathForIssuer(widget.account.issuer).then((value) {
+      setState(() {
+        _imagePath = value;
+      });
+    });
   }
+
+  String _imagePath = "";
 
   @override
   Widget build(BuildContext context) {
@@ -169,9 +180,16 @@ class _AccountListItem extends State<AccountListItem> {
         return AccountListTile(
           account: widget.account,
           controller: widget.controller,
-          imageController: ImageFileController(),
+          image: _picture(),
         );
       },
     );
+  }
+
+  Widget? _picture() {
+    if (_imagePath != "") {
+      return SvgPicture.asset(_imagePath);
+    }
+    return null;
   }
 }

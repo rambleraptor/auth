@@ -97,7 +97,7 @@ SavedAccount createSavedAccount(Account account, String id) {
   return SavedAccount(
       id: id,
       secret: account.secret,
-      website: account.website,
+      issuer: account.issuer,
       username: account.username);
 }
 
@@ -108,7 +108,7 @@ Account createAccountFromMutable(MutableAccount newAccount) {
   return Account(
       secret: newAccount.secret!,
       username: newAccount.username!,
-      website: newAccount.website!);
+      issuer: newAccount.issuer!);
 }
 
 void getOrCreateAccount(SavedAccount? account, MutableAccount newAccount,

@@ -44,5 +44,5 @@ List<SavedAccount> findAccounts(String query, List<SavedAccount> accounts) {
 }
 
 bool accountMatchesQuery(String query, Account account) {
-  return account.username.contains(query) || account.website.contains(query);
+  return account.username.contains(query) || account.issuer.contains(query);
 }

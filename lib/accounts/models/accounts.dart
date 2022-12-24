@@ -9,9 +9,9 @@ class SavedAccount extends Account {
   SavedAccount(
       {required this.id,
       required this.secret,
-      required this.website,
+      required this.issuer,
       required this.username})
-      : super(secret: secret, website: website, username: username) {
+      : super(secret: secret, issuer: issuer, username: username) {
     createdAt = DateTime.now();
   }
 
@@ -26,7 +26,7 @@ class SavedAccount extends Account {
   @HiveField(2)
   @override
   // ignore: overridden_fields
-  final String website;
+  final String issuer;
 
   @HiveField(3)
   @override
@@ -49,16 +49,16 @@ class SavedAccount extends Account {
 
 class Account extends Equatable {
   const Account(
-      {required this.secret, required this.website, required this.username});
+      {required this.secret, required this.issuer, required this.username});
 
   final String secret;
 
-  final String website;
+  final String issuer;
 
   final String username;
 
   @override
-  List<Object> get props => [secret, website, username];
+  List<Object> get props => [secret, issuer, username];
 
   String code() {
     return OTP
@@ -78,15 +78,15 @@ class Account extends Equatable {
 // MutableAccounts live only in memory.
 // They're used for forms, where the values can be changed by the user multiple times.
 class MutableAccount {
-  MutableAccount({this.secret = "", this.website = "", this.username = ""});
+  MutableAccount({this.secret = "", this.issuer = "", this.username = ""});
 
   String? secret;
 
-  String? website;
+  String? issuer;
 
   String? username;
 
   bool isValid() {
-    return secret != "" && website != "" && username != "";
+    return secret != "" && issuer != "" && username != "";
   }
 }
