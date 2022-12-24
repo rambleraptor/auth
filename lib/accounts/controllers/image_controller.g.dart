@@ -19,12 +19,12 @@ Map<String, dynamic> _$AegisIconRootToJson(AegisIconRoot instance) =>
     };
 
 AegisIcon _$AegisIconFromJson(Map<String, dynamic> json) => AegisIcon(
-      path: json['path'] as String,
-      issuers:
-          (json['issuers'] as List<dynamic>).map((e) => e as String).toList(),
+      filename: json['filename'] as String,
+      issuer:
+          (json['issuer'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$AegisIconToJson(AegisIcon instance) => <String, dynamic>{
-      'path': instance.path,
-      'issuers': instance.issuers,
+      'filename': instance.filename,
+      'issuer': instance.issuer,
     };

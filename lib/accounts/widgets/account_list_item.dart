@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auth/accounts/controllers/image_controller.dart';
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
@@ -6,6 +8,7 @@ import 'package:auth/accounts/widgets/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ActionListTileDeleteAction extends StatelessWidget {
   const ActionListTileDeleteAction(
@@ -57,14 +60,15 @@ class AccountListTile extends StatelessWidget {
       {super.key,
       required this.account,
       required this.controller,
-      required this.imageController});
+      required this.image});
 
   final SavedAccount account;
   final AbstractAccountController controller;
-  final ImageController imageController;
+  final Widget? image;
 
   @override
   Widget build(BuildContext context) {
+    log("Image $image");
     return Slidable(
       key: ValueKey("${account.id}_slidable"),
       endActionPane: ActionPane(motion: const ScrollMotion(), children: [
@@ -82,7 +86,7 @@ class AccountListTile extends StatelessWidget {
         leading: SizedBox(
           height: 40,
           width: 40,
-          child: imageController.widgetForIssuer(account.issuer),
+          child: image,
         ),
         title: _AccountDetails(
           account: account,
@@ -159,17 +163,29 @@ class _AccountListItem extends State<AccountListItem> {
   void initState() {
     super.initState();
     widget.account.updateCode();
+
+    ImageFileController().pathForIssuer(widget.account.issuer).then((value) {
+      setState(() {
+        _path = value;
+      });
+    });
   }
+
+  String _path = "";
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: widget.stream,
       builder: (context, snapshot) {
+        Widget? image = null;
+        if (_path != "") {
+          image = SvgPicture.asset(_path);
+        }
         return AccountListTile(
           account: widget.account,
           controller: widget.controller,
-          imageController: ImageFileController(),
+          image: image,
         );
       },
     );

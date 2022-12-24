@@ -1,24 +1,26 @@
 import 'dart:convert';
+import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'image_controller.g.dart';
 
 abstract class ImageController {
-  Future<Widget?> widgetForIssuer(String url);
+  Future<String> pathForIssuer(String issuer);
 }
 
 class ImageFileController extends ImageController {
   @override
-  Future<Widget?> widgetForIssuer(String issuer) {
-    return jsonFile().then((root) => root.findIssuer(issuer)?.svgIcon());
-  }
-
-  String fileName(String url) {
-    return "assets/twofactorauth/img/${url[0]}/$url.svg";
+  Future<String> pathForIssuer(String issuer) {
+    return jsonFile().then((root) {
+      log("Future has run");
+      AegisIcon? icon = root.findIssuer(issuer);
+      if (icon != null) {
+        return icon.path();
+      }
+      return "";
+    });
   }
 
   Future<AegisIconRoot> jsonFile() async {
@@ -42,7 +44,7 @@ class AegisIconRoot {
 
   AegisIcon? findIssuer(String issuer) {
     for (AegisIcon icon in icons) {
-      if (icon.issuers.contains(issuer)) {
+      if (icon.issuer.contains(issuer)) {
         return icon;
       }
     }
@@ -52,20 +54,17 @@ class AegisIconRoot {
 
 @JsonSerializable()
 class AegisIcon {
-  final String path;
-  final List<String> issuers;
+  final String filename;
+  final List<String> issuer;
 
-  AegisIcon({required this.path, required this.issuers});
+  AegisIcon({required this.filename, required this.issuer});
 
   factory AegisIcon.fromJson(Map<String, dynamic> json) =>
       _$AegisIconFromJson(json);
 
   Map<String, dynamic> toJson() => _$AegisIconToJson(this);
 
-  Widget svgIcon() {
-    return SvgPicture.asset(
-      path,
-      semanticsLabel: "${issuers[0]} Logo",
-    );
+  String path() {
+    return "assets/aegis-icons/$filename";
   }
 }
