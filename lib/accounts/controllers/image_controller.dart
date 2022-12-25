@@ -1,34 +1,71 @@
+import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter/services.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'image_controller.g.dart';
 
 abstract class ImageController {
-  Widget widgetForWebsite(String url);
+  // pathForIssuer returns the path to an image file for a given issuer.
+  // It returns a Future because loading the image name may require async actions.
+  Future<String> pathForIssuer(String issuer);
 }
 
 class ImageFileController extends ImageController {
   @override
-  Widget widgetForWebsite(String url) {
-    String host = stripUrl(url);
-    String fn = fileName(host);
-    log("Fetching image for host $host with filename $fn");
-    return SvgPicture.asset(
-      fn,
-      semanticsLabel: "$host Logo",
-    );
+  Future<String> pathForIssuer(String issuer) {
+    return jsonFile().then((root) {
+      AegisIcon? icon = root.findIssuer(issuer);
+      if (icon != null) {
+        return icon.path();
+      }
+      return "";
+    });
   }
 
-  String fileName(String url) {
-    return "assets/twofactorauth/img/${url[0]}/$url.svg";
+  Future<AegisIconRoot> jsonFile() async {
+    final String response =
+        await rootBundle.loadString('assets/aegis-icons/pack.json');
+    final data = await json.decode(response);
+    return AegisIconRoot.fromJson(data);
   }
 }
 
-String stripUrl(String url) {
-  if (!url.startsWith('http')) {
-    url = "http://$url";
+@JsonSerializable()
+class AegisIconRoot {
+  final List<AegisIcon> icons;
+
+  AegisIconRoot({required this.icons});
+
+  factory AegisIconRoot.fromJson(Map<String, dynamic> json) =>
+      _$AegisIconRootFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AegisIconRootToJson(this);
+
+  AegisIcon? findIssuer(String issuer) {
+    for (AegisIcon icon in icons) {
+      if (icon.issuer.contains(issuer)) {
+        return icon;
+      }
+    }
+    return null;
   }
-  final uri = Uri.parse(url);
-  List<String> parts = uri.host.split('.');
-  return parts.sublist(1).join('.');
+}
+
+@JsonSerializable()
+class AegisIcon {
+  final String filename;
+  final List<String> issuer;
+
+  AegisIcon({required this.filename, required this.issuer});
+
+  factory AegisIcon.fromJson(Map<String, dynamic> json) =>
+      _$AegisIconFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AegisIconToJson(this);
+
+  String path() {
+    return "assets/aegis-icons/$filename";
+  }
 }
