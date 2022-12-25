@@ -3,7 +3,8 @@ import 'package:auth/accounts/models/accounts.dart';
 import 'package:flutter/material.dart';
 
 class AccountDetailsForm extends StatefulWidget {
-  const AccountDetailsForm({super.key, required this.fetcher, this.account});
+  const AccountDetailsForm(
+      {super.key, required this.fetcher, this.account, this.mutableAccount});
 
   final AbstractAccountController fetcher;
   final SavedAccount? account;
