@@ -46,6 +46,7 @@ dependencies:
   flutter_svg: ^1.1.6
   json_annotation: ^4.7.0
   mobile_scanner: ^2.0.0
+  base32: ^2.1.3
 
 dev_dependencies:
   flutter_test:
