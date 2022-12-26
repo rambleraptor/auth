@@ -1,5 +1,6 @@
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
+import 'package:auth/accounts/view_models/account_details.dart';
 import 'package:flutter/material.dart';
 
 class AccountDetailsForm extends StatefulWidget {
@@ -17,6 +18,7 @@ class AccountDetailsForm extends StatefulWidget {
 class _AccountDetailsFormState extends State<AccountDetailsForm> {
   final _formKey = GlobalKey<FormState>();
 
+  @override
   void initState() {
     super.initState();
     if (widget.mutableAccount != null) {
@@ -28,6 +30,8 @@ class _AccountDetailsFormState extends State<AccountDetailsForm> {
   // Will be empty for existing accounts, but non-null for creation from QR code.
   MutableAccount updatedAccount = MutableAccount();
 
+  final AccountDetailsViewModel _viewModel = AccountDetailsViewModel();
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -37,7 +41,8 @@ class _AccountDetailsFormState extends State<AccountDetailsForm> {
             leading: const Icon(Icons.lock),
             title: TextFormField(
               key: const Key('secret_form_field'),
-              initialValue: widget.account?.secret,
+              initialValue: _viewModel.initialSecretValue(
+                  widget.account, widget.mutableAccount),
               decoration: const InputDecoration(
                 labelText: "Secret",
               ),
@@ -51,7 +56,8 @@ class _AccountDetailsFormState extends State<AccountDetailsForm> {
             leading: const Icon(Icons.public),
             title: TextFormField(
               key: const Key('issuer_form_field'),
-              initialValue: widget.account?.issuer,
+              initialValue: _viewModel.initialIssuerValue(
+                  widget.account, widget.mutableAccount),
               decoration: const InputDecoration(
                 labelText: "Issuer",
               ),
@@ -65,7 +71,8 @@ class _AccountDetailsFormState extends State<AccountDetailsForm> {
               leading: const Icon(Icons.account_circle),
               title: TextFormField(
                 key: const Key('username_form_field'),
-                initialValue: widget.account?.username,
+                initialValue: _viewModel.initialUsernameValue(
+                    widget.account, widget.mutableAccount),
                 decoration: const InputDecoration(
                   labelText: "Username",
                 ),
