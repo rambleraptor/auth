@@ -1,6 +1,6 @@
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/account_search.dart';
-import 'package:auth/accounts/view/account_details.dart';
+import 'package:auth/accounts/view/account_creation.dart';
 import 'package:auth/accounts/widgets/account_list.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ class AccountsPage extends StatelessWidget {
         onPressed: () => {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => AccountDetailsScreen(fetcher: fetcher),
+              builder: (context) => AccountCreationScreen(controller: fetcher),
             ),
           )
         },

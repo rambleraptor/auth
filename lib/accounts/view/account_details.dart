@@ -4,10 +4,12 @@ import 'package:auth/accounts/widgets/account_details.dart';
 import 'package:flutter/material.dart';
 
 class AccountDetailsScreen extends StatelessWidget {
-  const AccountDetailsScreen({super.key, required this.fetcher, this.account});
+  AccountDetailsScreen(
+      {super.key, required this.fetcher, this.account, this.mutableAccount});
 
   final AbstractAccountController fetcher;
   final SavedAccount? account;
+  MutableAccount? mutableAccount;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,7 @@ class AccountDetailsScreen extends StatelessWidget {
       body: AccountDetailsForm(
         fetcher: fetcher,
         account: account,
+        mutableAccount: mutableAccount,
       ),
     );
   }

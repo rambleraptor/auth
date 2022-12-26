@@ -1,0 +1,61 @@
+import 'package:auth/accounts/models/account_fetcher.dart';
+import 'package:flutter/material.dart';
+
+import '../models/accounts.dart';
+
+class AccountDetailsViewModel {
+  String initialSecretValue(Account? account, MutableAccount? mutableAccount) {
+    if (account != null) {
+      return account.secret;
+    }
+    if (mutableAccount != null) {
+      if (mutableAccount.secret != null) {
+        return mutableAccount.secret!;
+      }
+    }
+    return "";
+  }
+
+  String initialIssuerValue(Account? account, MutableAccount? mutableAccount) {
+    if (account != null) {
+      return account.issuer;
+    }
+    if (mutableAccount != null) {
+      if (mutableAccount.issuer != null) {
+        return mutableAccount.issuer!;
+      }
+    }
+    return "";
+  }
+
+  String initialUsernameValue(
+      Account? account, MutableAccount? mutableAccount) {
+    if (account != null) {
+      return account.username;
+    }
+    if (mutableAccount != null) {
+      if (mutableAccount.username != null) {
+        return mutableAccount.username!;
+      }
+    }
+    return "";
+  }
+
+  void onSave(
+      BuildContext context,
+      GlobalKey<FormState> formKey,
+      SavedAccount? savedAccount,
+      MutableAccount updatedAccount,
+      AbstractAccountController fetcher) {
+    final form = formKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      getOrCreateAccount(savedAccount, updatedAccount, fetcher);
+      _navigateToListScreen(context);
+    }
+  }
+
+  void _navigateToListScreen(BuildContext context) {
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+}

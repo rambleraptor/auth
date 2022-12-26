@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auth/accounts/controllers/image_controller.dart';
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
