@@ -83,15 +83,8 @@ class _AccountDetailsFormState extends State<AccountDetailsForm> {
               )),
           TextButton(
             child: const Text('Submit'),
-            onPressed: () {
-              final form = _formKey.currentState;
-              if (form!.validate()) {
-                form.save();
-                getOrCreateAccount(
-                    widget.account, updatedAccount, widget.fetcher);
-                Navigator.pop(context);
-              }
-            },
+            onPressed: () => _viewModel.onSave(context, _formKey,
+                widget.account, updatedAccount, widget.fetcher),
           )
         ]));
   }

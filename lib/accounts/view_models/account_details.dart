@@ -1,3 +1,6 @@
+import 'package:auth/accounts/models/account_fetcher.dart';
+import 'package:flutter/material.dart';
+
 import '../models/accounts.dart';
 
 class AccountDetailsViewModel {
@@ -36,5 +39,23 @@ class AccountDetailsViewModel {
       }
     }
     return "";
+  }
+
+  void onSave(
+      BuildContext context,
+      GlobalKey<FormState> formKey,
+      SavedAccount? savedAccount,
+      MutableAccount updatedAccount,
+      AbstractAccountController fetcher) {
+    final form = formKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      getOrCreateAccount(savedAccount, updatedAccount, fetcher);
+      _navigateToListScreen(context);
+    }
+  }
+
+  void _navigateToListScreen(BuildContext context) {
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }
