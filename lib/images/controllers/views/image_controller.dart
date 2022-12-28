@@ -6,21 +6,29 @@ import 'package:flutter/services.dart';
 import '../../models/aegis_models.dart';
 
 class ImageFileController extends ChangeNotifier {
-  @override
-  Future<String> pathForIssuer(String issuer) {
-    return jsonFile().then((root) {
+  AegisIcon? _icon;
+
+  void findPath(String issuer) {
+    _jsonFile().then((root) {
       AegisIcon? icon = root.findIssuer(issuer);
       if (icon != null) {
-        return icon.path();
+        _icon = icon;
       }
-      return "";
+      notifyListeners();
     });
   }
 
-  Future<AegisIconRoot> jsonFile() async {
+  Future<AegisIconRoot> _jsonFile() async {
     final String response =
         await rootBundle.loadString('assets/aegis-icons/pack.json');
     final data = await json.decode(response);
     return AegisIconRoot.fromJson(data);
+  }
+
+  String path() {
+    if (_icon != null) {
+      return _icon!.path();
+    }
+    return "";
   }
 }

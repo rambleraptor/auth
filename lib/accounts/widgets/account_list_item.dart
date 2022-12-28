@@ -1,12 +1,11 @@
-import 'package:auth/accounts/controllers/image_controller.dart';
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:auth/accounts/view/account_details.dart';
 import 'package:auth/accounts/widgets/timer.dart';
+import 'package:auth/images/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/svg.dart';
 
 class ActionListTileDeleteAction extends StatelessWidget {
   const ActionListTileDeleteAction(
@@ -160,15 +159,7 @@ class _AccountListItem extends State<AccountListItem> {
   void initState() {
     super.initState();
     widget.account.updateCode();
-
-    ImageFileController().pathForIssuer(widget.account.issuer).then((value) {
-      setState(() {
-        _imagePath = value;
-      });
-    });
   }
-
-  String _imagePath = "";
 
   @override
   Widget build(BuildContext context) {
@@ -178,16 +169,9 @@ class _AccountListItem extends State<AccountListItem> {
         return AccountListTile(
           account: widget.account,
           controller: widget.controller,
-          image: _picture(),
+          image: AccountImage(account: widget.account),
         );
       },
     );
-  }
-
-  Widget? _picture() {
-    if (_imagePath != "") {
-      return SvgPicture.asset(_imagePath);
-    }
-    return null;
   }
 }
