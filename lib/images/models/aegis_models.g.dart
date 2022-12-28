@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'image_controller.dart';
+part of 'aegis_models.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
