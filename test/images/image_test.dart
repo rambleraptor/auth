@@ -2,19 +2,11 @@ import 'package:auth/accounts/models/account_seed.dart';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:auth/images/widgets/image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../utils.dart';
-
-MaterialApp createWidget(Key key, Account account) {
-  return MaterialApp(
-    title: key.toString(),
-    home: Scaffold(
-      body: AccountImage(account: account),
-    ),
-  );
-}
 
 void main() {
   group('ImageFileController', () {
@@ -27,7 +19,9 @@ void main() {
       await tester.pumpWidget(
         createWidget(
           testKey,
-          controller.getAccount(0),
+          AccountImage(
+            account: controller.getAccount(0),
+          ),
         ),
       );
 

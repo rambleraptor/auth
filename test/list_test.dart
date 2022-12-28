@@ -8,15 +8,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'utils.dart';
 
-MaterialApp createWidget(Key key, AbstractAccountController af) {
-  return MaterialApp(
-    title: key.toString(),
-    home: Scaffold(
-      body: AccountsList(
-        key: key,
-        fetcher: af,
-      ),
-    ),
+Widget widget(Key key, AbstractAccountController af) {
+  return createWidget(
+    key,
+    AccountsList(key: key, fetcher: af),
   );
 }
 
@@ -25,7 +20,7 @@ void main() {
     const numAccounts = 5;
     const testKey = Key('K');
     await tester.pumpWidget(
-      createWidget(
+      widget(
         testKey,
         TestAccountFetcher(
           accounts: fetchSavedAccounts(numAccounts),
@@ -92,7 +87,7 @@ void main() {
     const testKey = Key('K');
     var fetcher = TestAccountFetcher(accounts: fetchSavedAccounts(numAccounts));
     await tester.pumpWidget(
-      createWidget(
+      widget(
         testKey,
         fetcher,
       ),

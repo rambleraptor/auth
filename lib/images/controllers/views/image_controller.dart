@@ -1,20 +1,24 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:auth/accounts/models/accounts.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/aegis_models.dart';
 
-class ImageFileController extends ChangeNotifier {
-  AegisIcon? _icon;
+class ImageFileController {
+  late final FutureProvider<String> provider;
 
-  void findPath(String issuer) {
-    _jsonFile().then((root) {
+  ImageFileController(Account account) {
+    provider = FutureProvider<String>((ref) async {
+      return findPath(account.issuer);
+    });
+  }
+
+  Future<String> findPath(String issuer) {
+    return _jsonFile().then((root) {
       AegisIcon? icon = root.findIssuer(issuer);
-      if (icon != null) {
-        _icon = icon;
-      }
-      notifyListeners();
+      return icon!.path();
     });
   }
 
@@ -23,12 +27,5 @@ class ImageFileController extends ChangeNotifier {
         await rootBundle.loadString('assets/aegis-icons/pack.json');
     final data = await json.decode(response);
     return AegisIconRoot.fromJson(data);
-  }
-
-  String path() {
-    if (_icon != null) {
-      return _icon!.path();
-    }
-    return "";
   }
 }
