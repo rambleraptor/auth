@@ -2,6 +2,8 @@ import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/account_seed.dart';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TestAccountFetcher extends AbstractAccountController {
   TestAccountFetcher({required this.accounts});
@@ -67,4 +69,15 @@ List<SavedAccount> saveAllAccounts(List<Account> accounts) {
     savedAccounts.add(createSavedAccount(accounts[i], i.toString()));
   }
   return savedAccounts;
+}
+
+Widget createWidget(Key key, Widget widget) {
+  return ProviderScope(
+    child: MaterialApp(
+      title: key.toString(),
+      home: Scaffold(
+        body: widget,
+      ),
+    ),
+  );
 }

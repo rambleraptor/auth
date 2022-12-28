@@ -1,6 +1,7 @@
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/view/account_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 AccountController createController() {
   return AccountController(
@@ -12,8 +13,10 @@ void main() async {
   AccountController controller = createController();
   await controller.init();
   runApp(
-    AuthApp(
-      controller: controller,
+    ProviderScope(
+      child: AuthApp(
+        controller: controller,
+      ),
     ),
   );
 }
