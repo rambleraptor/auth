@@ -3,6 +3,8 @@ import 'package:auth/accounts/models/accounts.dart';
 import 'package:auth/accounts/widgets/account_list.dart';
 import 'package:flutter/material.dart';
 
+import '../data/search.dart';
+
 class AccountSearchDelegate extends SearchDelegate {
   AbstractAccountController? controller;
 
@@ -33,14 +35,4 @@ class AccountSearchDelegate extends SearchDelegate {
     return AccountsListView(
         accounts: filteredAccounts, controller: controller!);
   }
-}
-
-List<SavedAccount> findAccounts(String query, List<SavedAccount> accounts) {
-  return accounts
-      .where((account) => accountMatchesQuery(query, account))
-      .toList();
-}
-
-bool accountMatchesQuery(String query, Account account) {
-  return account.username.contains(query) || account.issuer.contains(query);
 }
