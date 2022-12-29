@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:uuid/uuid.dart';
 
 import 'account_seed.dart';
 
@@ -58,9 +59,8 @@ class AccountController extends AbstractAccountController {
 
   @override
   void addAccount(Account account) {
-    var numAccounts = _box().values.length;
-    // TODO: I need a better ID method than this...
-    String id = (numAccounts + 1).toString();
+    var uuid = const Uuid();
+    String id = uuid.v4();
     SavedAccount savedAccount = createSavedAccount(account, id);
     log("Adding account $savedAccount with id $id");
     _box().put(id, savedAccount);
