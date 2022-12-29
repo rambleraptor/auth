@@ -144,40 +144,26 @@ class _AccountDetails extends StatelessWidget {
   }
 }
 
-class AccountListItem extends ConsumerStatefulWidget {
+class AccountListItem extends ConsumerWidget {
   const AccountListItem(
-      {super.key,
-      required this.account,
-      required this.stream,
-      required this.controller});
+      {super.key, required this.account, required this.controller});
 
   final SavedAccount account;
-  final Stream stream;
   final AbstractAccountController controller;
 
   @override
-  ConsumerState<AccountListItem> createState() => _AccountListItem();
-}
-
-class _AccountListItem extends ConsumerState<AccountListItem> {
-  @override
-  void initState() {
-    super.initState();
-    widget.account.updateCode();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final timerStream = ref.watch(timedStreamProvider);
     return timerStream.when(
-        loading: () => Container(),
-        error: ((error, stackTrace) => Text("$error, $stackTrace")),
-        data: (value) {
-          return AccountListTile(
-            account: widget.account,
-            controller: widget.controller,
-            image: AccountImage(account: widget.account),
-          );
-        });
+      loading: () => Container(),
+      error: ((error, stackTrace) => Text("$error, $stackTrace")),
+      data: (value) {
+        return AccountListTile(
+          account: account,
+          controller: controller,
+          image: AccountImage(account: account),
+        );
+      },
+    );
   }
 }

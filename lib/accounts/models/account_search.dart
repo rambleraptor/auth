@@ -25,7 +25,7 @@ class AccountSearchDelegate extends SearchDelegate {
     List<SavedAccount> accounts = controller!.getAccounts().toList();
     List<SavedAccount> filteredAccounts = findAccounts(query, accounts);
     return AccountsListView(
-        accounts: filteredAccounts, stream: stream!, controller: controller!);
+        accounts: filteredAccounts, controller: controller!);
   }
 
   @override
@@ -33,7 +33,7 @@ class AccountSearchDelegate extends SearchDelegate {
     List<SavedAccount> accounts = controller!.getAccounts().toList();
     List<SavedAccount> filteredAccounts = findAccounts(query, accounts);
     return AccountsListView(
-        accounts: filteredAccounts, stream: stream!, controller: controller!);
+        accounts: filteredAccounts, controller: controller!);
   }
 }
 
