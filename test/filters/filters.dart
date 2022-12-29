@@ -57,9 +57,9 @@ void main() {
     List<SavedAccount> filteredAccounts =
         filterAccounts(tappedAccounts, FilterType.mostCommon);
 
-    expect(filteredAccounts[0].username, "a");
+    expect(filteredAccounts[0].username, "c");
     expect(filteredAccounts[1].username, "b");
-    expect(filteredAccounts[2].username, "c");
+    expect(filteredAccounts[2].username, "a");
   });
 }
 

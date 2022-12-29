@@ -57,7 +57,7 @@ class AuthAppBar extends StatelessWidget with PreferredSizeWidget {
 }
 
 class AuthAppBarSearchButton extends StatelessWidget {
-  AuthAppBarSearchButton({super.key, required this.controller});
+  const AuthAppBarSearchButton({super.key, required this.controller});
 
   final AbstractAccountController controller;
   @override
@@ -81,22 +81,23 @@ class AuthAppBarFilterButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return DropdownButton(
-      items: const <DropdownMenuItem>[
-        DropdownMenuItem(
+    return PopupMenuButton<FilterType>(
+      icon: const Icon(Icons.filter_list),
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<FilterType>>[
+        const PopupMenuItem(
           value: FilterType.username,
           child: Text("Username"),
         ),
-        DropdownMenuItem(
+        const PopupMenuItem(
           value: FilterType.website,
-          child: Text("Username"),
+          child: Text("Website"),
         ),
-        DropdownMenuItem(
+        const PopupMenuItem(
           value: FilterType.mostCommon,
           child: Text("Most Commonly Used"),
         ),
       ],
-      onChanged: (value) => ref
+      onSelected: (FilterType value) => ref
           .read<FilterTypeNotifier>(filtersProvider.notifier)
           .changeFilter(value),
     );

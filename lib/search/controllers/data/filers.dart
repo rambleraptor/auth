@@ -23,7 +23,8 @@ List<SavedAccount> filterAccounts(
 
     case FilterType.mostCommon:
       {
-        accounts.sort((a, b) => a.tapped.compareTo(b.tapped));
+        // We want the highest numbers first.
+        accounts.sort((a, b) => a.tapped.compareTo(b.tapped) * -1);
       }
       break;
   }
