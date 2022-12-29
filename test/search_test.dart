@@ -1,4 +1,4 @@
-import 'package:auth/accounts/models/account_search.dart';
+import 'package:auth/search/controllers/data/search.dart';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:flutter_test/flutter_test.dart';
 
