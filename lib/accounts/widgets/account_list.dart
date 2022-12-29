@@ -16,7 +16,6 @@ class AccountsList extends StatelessWidget {
       builder: (context, value, child) {
         return AccountsListView(
           accounts: fetcher.getAccounts().toList(),
-          stream: fetcher.stream,
           controller: fetcher,
         );
       },

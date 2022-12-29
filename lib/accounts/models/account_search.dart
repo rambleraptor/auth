@@ -5,10 +5,8 @@ import 'package:flutter/material.dart';
 
 class AccountSearchDelegate extends SearchDelegate {
   AbstractAccountController? controller;
-  Stream<dynamic>? stream;
 
-  AccountSearchDelegate({required this.controller, required this.stream})
-      : super();
+  AccountSearchDelegate({required this.controller}) : super();
 
   @override
   List<Widget>? buildActions(BuildContext context) {

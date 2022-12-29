@@ -49,8 +49,7 @@ class AuthAppBar extends StatelessWidget with PreferredSizeWidget {
           onPressed: () {
             showSearch(
               context: context,
-              delegate: AccountSearchDelegate(
-                  controller: fetcher, stream: fetcher.stream),
+              delegate: AccountSearchDelegate(controller: fetcher),
             );
           },
         )

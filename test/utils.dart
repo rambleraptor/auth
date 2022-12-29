@@ -37,11 +37,6 @@ class TestAccountFetcher extends AbstractAccountController {
   }
 
   @override
-  Stream<dynamic> get stream {
-    return const Stream.empty().asBroadcastStream();
-  }
-
-  @override
   void deleteAccount(SavedAccount account) {
     accounts.remove(account);
   }
