@@ -5,7 +5,12 @@ import 'package:auth/accounts/widgets/timer.dart';
 import 'package:auth/images/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
+final timedStreamProvider = StreamProvider<dynamic>((ref) {
+  return Stream.periodic(const Duration(seconds: 1)).asBroadcastStream();
+});
 
 class ActionListTileDeleteAction extends StatelessWidget {
   const ActionListTileDeleteAction(
@@ -139,7 +144,7 @@ class _AccountDetails extends StatelessWidget {
   }
 }
 
-class AccountListItem extends StatefulWidget {
+class AccountListItem extends ConsumerStatefulWidget {
   const AccountListItem(
       {super.key,
       required this.account,
@@ -151,10 +156,10 @@ class AccountListItem extends StatefulWidget {
   final AbstractAccountController controller;
 
   @override
-  State<AccountListItem> createState() => _AccountListItem();
+  ConsumerState<AccountListItem> createState() => _AccountListItem();
 }
 
-class _AccountListItem extends State<AccountListItem> {
+class _AccountListItem extends ConsumerState<AccountListItem> {
   @override
   void initState() {
     super.initState();
@@ -163,15 +168,16 @@ class _AccountListItem extends State<AccountListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: widget.stream,
-      builder: (context, snapshot) {
-        return AccountListTile(
-          account: widget.account,
-          controller: widget.controller,
-          image: AccountImage(account: widget.account),
-        );
-      },
-    );
+    final timerStream = ref.watch(timedStreamProvider);
+    return timerStream.when(
+        loading: () => Container(),
+        error: ((error, stackTrace) => Text("$error, $stackTrace")),
+        data: (value) {
+          return AccountListTile(
+            account: widget.account,
+            controller: widget.controller,
+            image: AccountImage(account: widget.account),
+          );
+        });
   }
 }
