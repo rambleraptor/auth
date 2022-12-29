@@ -1,4 +1,3 @@
-import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:auth/search/controllers/data/filers.dart';
 import 'package:flutter_test/flutter_test.dart';
