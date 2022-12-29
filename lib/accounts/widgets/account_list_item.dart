@@ -5,7 +5,12 @@ import 'package:auth/accounts/widgets/timer.dart';
 import 'package:auth/images/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
+final timedStreamProvider = StreamProvider<dynamic>((ref) {
+  return Stream.periodic(const Duration(seconds: 1)).asBroadcastStream();
+});
 
 class ActionListTileDeleteAction extends StatelessWidget {
   const ActionListTileDeleteAction(
@@ -139,37 +144,28 @@ class _AccountDetails extends StatelessWidget {
   }
 }
 
-class AccountListItem extends StatefulWidget {
+class AccountListItem extends ConsumerWidget {
   const AccountListItem(
-      {super.key,
-      required this.account,
-      required this.stream,
-      required this.controller});
+      {super.key, required this.account, required this.controller});
 
   final SavedAccount account;
-  final Stream stream;
   final AbstractAccountController controller;
 
   @override
-  State<AccountListItem> createState() => _AccountListItem();
-}
-
-class _AccountListItem extends State<AccountListItem> {
-  @override
-  void initState() {
-    super.initState();
-    widget.account.updateCode();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: widget.stream,
-      builder: (context, snapshot) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final timerStream = ref.watch(timedStreamProvider);
+    return timerStream.when(
+      loading: () => AccountListTile(
+        account: account,
+        controller: controller,
+        image: AccountImage(account: account),
+      ),
+      error: ((error, stackTrace) => Text("$error, $stackTrace")),
+      data: (value) {
         return AccountListTile(
-          account: widget.account,
-          controller: widget.controller,
-          image: AccountImage(account: widget.account),
+          account: account,
+          controller: controller,
+          image: AccountImage(account: account),
         );
       },
     );

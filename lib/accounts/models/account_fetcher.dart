@@ -16,15 +16,10 @@ abstract class AbstractAccountController {
   void deleteAccount(SavedAccount account);
   void updateAccount(SavedAccount account, MutableAccount newValues);
   void incrementTapped(SavedAccount account);
-
-  Stream<dynamic> get stream;
 }
 
 class AccountController extends AbstractAccountController {
-  AccountController({required this.stream});
-
-  @override
-  final Stream stream;
+  AccountController();
 
   @override
   Future init() async {

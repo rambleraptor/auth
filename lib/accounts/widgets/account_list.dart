@@ -16,7 +16,6 @@ class AccountsList extends StatelessWidget {
       builder: (context, value, child) {
         return AccountsListView(
           accounts: fetcher.getAccounts().toList(),
-          stream: fetcher.stream,
           controller: fetcher,
         );
       },
@@ -26,13 +25,9 @@ class AccountsList extends StatelessWidget {
 
 class AccountsListView extends StatelessWidget {
   const AccountsListView(
-      {super.key,
-      required this.accounts,
-      required this.stream,
-      required this.controller});
+      {super.key, required this.accounts, required this.controller});
 
   final List<SavedAccount> accounts;
-  final Stream<dynamic> stream;
   final AbstractAccountController controller;
 
   @override
@@ -42,7 +37,6 @@ class AccountsListView extends StatelessWidget {
       itemBuilder: (context, index) {
         return AccountListItem(
           account: accounts[index],
-          stream: controller.stream,
           controller: controller,
         );
       },
