@@ -19,11 +19,13 @@ void main() {
   testWidgets('AccountList displays accounts', (tester) async {
     const numAccounts = 5;
     const testKey = Key('K');
-    await tester.pumpWidget(
-      widget(
-        testKey,
-        TestAccountFetcher(
-          accounts: fetchSavedAccounts(numAccounts),
+    await tester.runAsync(
+      () => tester.pumpWidget(
+        widget(
+          testKey,
+          TestAccountFetcher(
+            accounts: fetchSavedAccounts(numAccounts),
+          ),
         ),
       ),
     );
@@ -86,10 +88,12 @@ void main() {
     const numAccounts = 1;
     const testKey = Key('K');
     var fetcher = TestAccountFetcher(accounts: fetchSavedAccounts(numAccounts));
-    await tester.pumpWidget(
-      widget(
-        testKey,
-        fetcher,
+    await tester.runAsync(
+      () => tester.pumpWidget(
+        widget(
+          testKey,
+          fetcher,
+        ),
       ),
     );
 

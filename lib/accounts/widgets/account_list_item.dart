@@ -155,7 +155,11 @@ class AccountListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final timerStream = ref.watch(timedStreamProvider);
     return timerStream.when(
-      loading: () => Container(),
+      loading: () => AccountListTile(
+        account: account,
+        controller: controller,
+        image: AccountImage(account: account),
+      ),
       error: ((error, stackTrace) => Text("$error, $stackTrace")),
       data: (value) {
         return AccountListTile(
