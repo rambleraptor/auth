@@ -1,19 +1,23 @@
 import 'package:auth/accounts/models/account_fetcher.dart';
+import 'package:auth/app/controllers/tabs.dart';
 import 'package:auth/search/controllers/data/filers.dart';
 import 'package:auth/search/controllers/views/account_search.dart';
 import 'package:auth/search/controllers/views/filter_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AuthAppBar extends StatelessWidget with PreferredSizeWidget {
+class AuthAppBar extends ConsumerWidget with PreferredSizeWidget {
   const AuthAppBar({super.key, required this.fetcher});
 
   final AbstractAccountController fetcher;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tabType = ref.watch(tabProvider);
     return AppBar(
-      title: const Text('Accounts'),
+      title: Text(
+        appBarTitle(tabType),
+      ),
       actions: <Widget>[
         AuthAppBarSearchButton(controller: fetcher),
         const AuthAppBarFilterButton(),

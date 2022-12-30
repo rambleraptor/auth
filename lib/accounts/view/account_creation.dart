@@ -24,36 +24,31 @@ class AccountCreationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Add an Account"),
+    return ListView(
+      padding: const EdgeInsets.all(8),
+      children: [
+        SizedBox(
+          height: 300,
+          child: MobileScanner(
+            allowDuplicates: false,
+            onDetect: (barcode, args) {
+              if (barcode.rawValue == null) {
+                debugPrint('Failed to scan Barcode');
+              } else {
+                final String totpUrl = barcode.rawValue!;
+                log('Barcode found! $totpUrl');
+                _viewModel.onBarcodeValueFetched(context, controller, totpUrl);
+              }
+            },
+          ),
         ),
-        body: ListView(
-          padding: const EdgeInsets.all(8),
-          children: [
-            SizedBox(
-              height: 300,
-              child: MobileScanner(
-                allowDuplicates: false,
-                onDetect: (barcode, args) {
-                  if (barcode.rawValue == null) {
-                    debugPrint('Failed to scan Barcode');
-                  } else {
-                    final String totpUrl = barcode.rawValue!;
-                    log('Barcode found! $totpUrl');
-                    _viewModel.onBarcodeValueFetched(
-                        context, controller, totpUrl);
-                  }
-                },
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () =>
-                  _viewModel.onManualAccountCreation(context, controller),
-              child: const Text("Add Account Manually"),
-            ),
-            debugButton(context),
-          ],
-        ));
+        ElevatedButton(
+          onPressed: () =>
+              _viewModel.onManualAccountCreation(context, controller),
+          child: const Text("Add Account Manually"),
+        ),
+        debugButton(context),
+      ],
+    );
   }
 }
