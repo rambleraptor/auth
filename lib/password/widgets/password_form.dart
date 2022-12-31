@@ -1,18 +1,22 @@
+import 'package:auth/password/controllers/data/password_controller.dart';
+import 'package:auth/password/controllers/views/password_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PasswordForm extends ConsumerStatefulWidget {
-  const PasswordForm({super.key});
+  const PasswordForm({super.key, required this.controller});
+
+  final PasswordController controller;
 
   @override
   ConsumerState<PasswordForm> createState() => PasswordFormState();
 }
 
-class PasswordFormState extends ConsumerState<PasswordForm> {}
-
 class PasswordFormState extends ConsumerState<PasswordForm> {
   final _formKey = GlobalKey<FormState>();
   String _password = "";
+
+  final _viewModel = PasswordFormViewController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +39,8 @@ class PasswordFormState extends ConsumerState<PasswordForm> {
           ),
           TextButton(
             child: const Text('Submit'),
-            onPressed: () => _viewModel.onSave(
-                context,
-                _formKey,
-                widget.account,
-                updatedAccount,
-                widget.fetcher,
-                ref.read(tabProvider.notifier)),
+            onPressed: () =>
+                _viewModel.onSave(_formKey, widget.controller, _password),
           )
         ],
       ),
