@@ -1,9 +1,11 @@
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/accounts.dart';
 import 'package:auth/accounts/view_models/account_details.dart';
+import 'package:auth/app/controllers/tabs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AccountDetailsForm extends StatefulWidget {
+class AccountDetailsForm extends ConsumerStatefulWidget {
   const AccountDetailsForm(
       {super.key, required this.fetcher, this.account, this.mutableAccount});
 
@@ -12,10 +14,10 @@ class AccountDetailsForm extends StatefulWidget {
   final MutableAccount? mutableAccount;
 
   @override
-  State<AccountDetailsForm> createState() => _AccountDetailsFormState();
+  ConsumerState<AccountDetailsForm> createState() => _AccountDetailsFormState();
 }
 
-class _AccountDetailsFormState extends State<AccountDetailsForm> {
+class _AccountDetailsFormState extends ConsumerState<AccountDetailsForm> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -83,8 +85,13 @@ class _AccountDetailsFormState extends State<AccountDetailsForm> {
               )),
           TextButton(
             child: const Text('Submit'),
-            onPressed: () => _viewModel.onSave(context, _formKey,
-                widget.account, updatedAccount, widget.fetcher),
+            onPressed: () => _viewModel.onSave(
+                context,
+                _formKey,
+                widget.account,
+                updatedAccount,
+                widget.fetcher,
+                ref.read(tabProvider.notifier)),
           )
         ]));
   }

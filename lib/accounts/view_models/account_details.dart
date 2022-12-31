@@ -1,4 +1,5 @@
 import 'package:auth/accounts/models/account_fetcher.dart';
+import 'package:auth/app/controllers/tabs.dart';
 import 'package:flutter/material.dart';
 
 import '../models/accounts.dart';
@@ -46,16 +47,18 @@ class AccountDetailsViewModel {
       GlobalKey<FormState> formKey,
       SavedAccount? savedAccount,
       MutableAccount updatedAccount,
-      AbstractAccountController fetcher) {
+      AbstractAccountController fetcher,
+      TabNotifier tabNotifier) {
     final form = formKey.currentState;
     if (form!.validate()) {
       form.save();
       getOrCreateAccount(savedAccount, updatedAccount, fetcher);
-      _navigateToListScreen(context);
+      _navigateToListScreen(context, tabNotifier);
     }
   }
 
-  void _navigateToListScreen(BuildContext context) {
+  void _navigateToListScreen(BuildContext context, TabNotifier tabNotifier) {
     Navigator.of(context).popUntil((route) => route.isFirst);
+    tabNotifier.switchTab(TabType.accountView);
   }
 }
