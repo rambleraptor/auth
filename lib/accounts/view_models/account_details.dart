@@ -44,17 +44,12 @@ class AccountDetailsViewModel {
 
   void onSave(
       BuildContext context,
-      GlobalKey<FormState> formKey,
       SavedAccount? savedAccount,
       MutableAccount updatedAccount,
       AbstractAccountController fetcher,
       TabNotifier tabNotifier) {
-    final form = formKey.currentState;
-    if (form!.validate()) {
-      form.save();
-      getOrCreateAccount(savedAccount, updatedAccount, fetcher);
-      _navigateToListScreen(context, tabNotifier);
-    }
+    getOrCreateAccount(savedAccount, updatedAccount, fetcher);
+    _navigateToListScreen(context, tabNotifier);
   }
 
   void _navigateToListScreen(BuildContext context, TabNotifier tabNotifier) {

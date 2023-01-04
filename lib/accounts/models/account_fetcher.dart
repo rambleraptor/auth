@@ -24,13 +24,13 @@ class AccountController extends AbstractAccountController {
 
   @override
   Future init() async {
-    await Hive.initFlutter();
     Hive.registerAdapter(SavedAccountAdapter());
     await Hive.deleteBoxFromDisk('accounts');
     await Hive.openBox<SavedAccount>('accounts');
 
     if (kDebugMode) {
       // Delete box to avoid spillover.
+      await Hive.openBox<SavedAccount>('accounts');
       fetchAccounts(10).forEach((account) {
         addAccount(account);
       });

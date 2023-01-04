@@ -1,6 +1,8 @@
 import 'package:auth/accounts/models/account_fetcher.dart';
 import 'package:auth/accounts/models/account_seed.dart';
 import 'package:auth/accounts/models/accounts.dart';
+import 'package:auth/password/controllers/data/password_controller.dart';
+import 'package:auth/password/models/password_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,6 +52,25 @@ class TestAccountFetcher extends AbstractAccountController {
   @override
   void incrementTapped(SavedAccount account) {
     accounts[int.parse(account.id)].incrementTapped();
+  }
+}
+
+class TestPasswordController extends PasswordController {
+  PasswordInfo _info = PasswordInfo(hasPassword: false, passwordHash: "");
+
+  @override
+  Future init() async {
+    return;
+  }
+
+  @override
+  void setInfo(PasswordInfo info) {
+    _info = info;
+  }
+
+  @override
+  PasswordInfo getInfo() {
+    return _info;
   }
 }
 

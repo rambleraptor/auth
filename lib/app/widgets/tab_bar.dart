@@ -3,7 +3,7 @@ import 'package:auth/accounts/view/account_creation.dart';
 import 'package:auth/accounts/widgets/account_list.dart';
 import 'package:auth/app/controllers/tabs.dart';
 import 'package:auth/app/widgets/app_bar.dart';
-import 'package:auth/settings/views/settings_page.dart';
+import 'package:auth/app/views/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
