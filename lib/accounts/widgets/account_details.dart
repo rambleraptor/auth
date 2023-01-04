@@ -85,13 +85,19 @@ class _AccountDetailsFormState extends ConsumerState<AccountDetailsForm> {
               )),
           TextButton(
             child: const Text('Submit'),
-            onPressed: () => _viewModel.onSave(
-                context,
-                _formKey,
-                widget.account,
-                updatedAccount,
-                widget.fetcher,
-                ref.read(tabProvider.notifier)),
+            onPressed: () {
+              final form = _formKey.currentState;
+              if (form!.validate()) {
+                form.save();
+                _viewModel.onSave(
+                  context,
+                  widget.account,
+                  updatedAccount,
+                  widget.fetcher,
+                  ref.read(tabProvider.notifier),
+                );
+              }
+            },
           )
         ]));
   }

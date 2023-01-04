@@ -10,6 +10,9 @@ abstract class PasswordController {
   void setInfo(PasswordInfo info);
 
   void setPassword(String password) {
+    if (password == "") {
+      throw UnsupportedError("Password cannot be blank");
+    }
     final hash = Crypt.sha256(password).toString();
     PasswordInfo passwordInfo =
         PasswordInfo(hasPassword: true, passwordHash: hash);

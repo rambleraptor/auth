@@ -38,10 +38,14 @@ class PasswordFormState extends ConsumerState<PasswordForm> {
             ),
           ),
           TextButton(
-            child: const Text('Submit'),
-            onPressed: () =>
-                _viewModel.onSave(_formKey, widget.controller, _password),
-          )
+              child: const Text('Submit'),
+              onPressed: () {
+                final form = _formKey.currentState;
+                if (form!.validate()) {
+                  form.save();
+                  _viewModel.onSave(_formKey, widget.controller, _password);
+                }
+              })
         ],
       ),
     );

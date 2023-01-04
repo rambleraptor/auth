@@ -6,16 +6,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'utils.dart';
 
-MaterialApp createWidget(
+Widget createTestWidget(
     Key key, AbstractAccountController af, SavedAccount? account) {
-  return MaterialApp(
-    title: key.toString(),
-    home: Scaffold(
-      body: AccountDetailsScreen(
-        key: key,
-        fetcher: af,
-        account: account,
-      ),
+  return createWidget(
+    key,
+    AccountDetailsScreen(
+      key: key,
+      fetcher: af,
+      account: account,
     ),
   );
 }
@@ -28,7 +26,7 @@ void main() {
       var fetcher =
           TestAccountFetcher(accounts: fetchSavedAccounts(numAccounts));
       const testKey = Key('K');
-      await tester.pumpWidget(createWidget(testKey, fetcher, null));
+      await tester.pumpWidget(createTestWidget(testKey, fetcher, null));
 
       // Fill out screen.
       await tester.enterText(
@@ -49,11 +47,11 @@ void main() {
       var fetcher =
           TestAccountFetcher(accounts: fetchSavedAccounts(numAccounts));
       const testKey = Key('K');
-      await tester.pumpWidget(createWidget(testKey, fetcher, null));
+      await tester.pumpWidget(createTestWidget(testKey, fetcher, null));
 
       // Recreate page with account
       SavedAccount account = fetcher.getAccount(0);
-      await tester.pumpWidget(createWidget(testKey, fetcher, account));
+      await tester.pumpWidget(createTestWidget(testKey, fetcher, account));
 
       var finder = find.byType(TextFormField);
       var items = finder.evaluate().toList();
@@ -70,7 +68,7 @@ void main() {
       var fetcher =
           TestAccountFetcher(accounts: fetchSavedAccounts(numAccounts));
       const testKey = Key('K');
-      await tester.pumpWidget(createWidget(testKey, fetcher, null));
+      await tester.pumpWidget(createTestWidget(testKey, fetcher, null));
 
       var finder = find.byType(TextFormField);
       var items = finder.evaluate().toList();
@@ -88,7 +86,7 @@ void main() {
           TestAccountFetcher(accounts: fetchSavedAccounts(numAccounts));
       const testKey = Key('K');
       SavedAccount account = fetcher.getAccount(1);
-      await tester.pumpWidget(createWidget(testKey, fetcher, account));
+      await tester.pumpWidget(createTestWidget(testKey, fetcher, account));
 
       const newSecret = 'temp';
 
